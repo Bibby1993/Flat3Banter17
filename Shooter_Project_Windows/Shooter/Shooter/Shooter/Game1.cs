@@ -23,6 +23,8 @@ namespace Shooter
 
         // Represents the player 
         Player player;
+        // A movement speed for the player
+        float playerMoveSpeed;
 
         // Keyboard states used to determine key presses
         KeyboardState currentKeyboardState;
@@ -32,43 +34,36 @@ namespace Shooter
         GamePadState currentGamePadState;
         GamePadState previousGamePadState;
 
-        // A movement speed for the player
-        float playerMoveSpeed;
-
         // Image used to display the static background
         Texture2D mainBackground;
+        Texture2D mainMenu;
+        Texture2D endMenu;
+        Texture2D projectileTexture;
+        Texture2D enemyTexture, heavyEnemyTexture;
+        Texture2D explosionTexture;
 
         // Parallaxing Layers
         ParallaxingBackground bgLayer1;
         ParallaxingBackground bgLayer2;
 
         // Enemies
-        Texture2D enemyTexture, heavyEnemyTexture;
         List<Enemy> enemies;
         List<HeavyEnemy> heavyEnemies;
+        List<Animation> explosions;
+        List<Projectile> projectiles;
 
         // The rate at which the enemies appear
         TimeSpan enemySpawnTime;
         TimeSpan previousSpawnTime;
-        
-        // The rate at which the Heavy enemies appear
         TimeSpan heavyEnemySpawnTime;
         TimeSpan previousheavyEnemySpawnTime;
-
-        //Main and end menus
-        Texture2D mainMenu;
-        Texture2D endMenu;
-
-        Texture2D explosionTexture;
-        List<Animation> explosions;
-
+        TimeSpan fireTime;
+        TimeSpan previousFireTime;
+        TimeSpan fireTimex2;
+        
         // The sound that is played when a laser is fired
         SoundEffect laserSound;
-
-        // The sound used when the player or an enemy dies
         SoundEffect explosionSound;
-
-        // The music played during gameplay
         Song gameplayMusic;
 
         //Number that holds the player score
@@ -79,15 +74,6 @@ namespace Shooter
 
         // A random number generator
         Random random;
-
-        Texture2D projectileTexture;
-        List<Projectile> projectiles;
-
-        // The rate of fire of the player laser
-        TimeSpan fireTime;
-        TimeSpan previousFireTime;
-        TimeSpan fireTimex2;
-
         Drawer drawer;
 
         public Game1()
