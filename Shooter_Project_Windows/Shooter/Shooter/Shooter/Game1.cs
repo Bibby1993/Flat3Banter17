@@ -508,24 +508,6 @@ namespace Shooter
 
         //==============================================================================================================================
 
-        private void AddMissile(Vector2 position)
-        {
-
-            if (currentKeyboardState.IsKeyDown(Keys.Space) ||
-            GamePad.GetState(PlayerIndex.One).Buttons.RightShoulder == ButtonState.Pressed)
-            {
-                if (missileCount > 0)
-                {
-                    Missile missile = new Missile();
-                    missile.Initialize(GraphicsDevice.Viewport, missileTexture, position);
-                    missiles.Add(missile);
-                    missileCount--;
-                }
-            }
-        }
-
-        //==============================================================================================================================
-
         private void UpdateProjectiles()
         {
             // Update the Projectiles
@@ -593,6 +575,23 @@ namespace Shooter
                 MediaPlayer.IsRepeating = true;
             }
             catch { }
+        }
+    
+        private void ChaeckforMissile()
+        {
+
+        
+            if (currentKeyboardState.IsKeyDown(Keys.Space) ||
+           GamePad.GetState(PlayerIndex.One).Buttons.RightShoulder == ButtonState.Pressed)
+            {
+                if(missileCount>0)
+                {
+                    Missile missile = new Missile();
+                    missile.Initialize(GraphicsDevice.Viewport, missileTexture, player.Position + new Vector2(player.Width / 2, 0));
+                    missiles.Add(missile);
+                missileCount--;
+                }
+            }
         }
 
     }
