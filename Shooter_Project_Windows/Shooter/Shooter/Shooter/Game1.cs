@@ -86,8 +86,6 @@ namespace Shooter
         TimeSpan fireTime;
         TimeSpan previousFireTime;
 
-        bool Playing;
-
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -98,9 +96,7 @@ namespace Shooter
 
         protected override void Initialize()
         {
-            Playing = false;
-
-
+  
             explosions = new List<Animation>();
             state = gameState.startScreen;
             //Set player's score to zero
@@ -390,7 +386,7 @@ namespace Shooter
                 lastScore = score;
                 score = 0;
                 player.Health = 100;
-                Playing = false;
+                state = gameState.startScreen;
             }
 
         }
