@@ -17,20 +17,35 @@ namespace Shooter
         List<HeavyEnemy> heavyEnemies;
         SpriteBatch spriteBatch;
         List<Projectile> projectiles;
+        Player player;
+        List<Animation> explosions;
+        Texture2D mainBackground;
+        ParallaxingBackground bgLayer1;
+        ParallaxingBackground bgLayer2;
 
-        public void UpdateVariables(List<Enemy> enemies, List<HeavyEnemy> heavyEnemies, List<Projectile> projectiles, SpriteBatch spriteBatch)
+
+        public void UpdateVariables(List<Enemy> enemies, List<HeavyEnemy> heavyEnemies, List<Projectile> projectiles,
+            List<Animation> explosions, SpriteBatch spriteBatch, Player player, Texture2D mainBackground,
+            ParallaxingBackground bgLayer1, ParallaxingBackground bgLayer2)
         {
             this.enemies = enemies;
             this.heavyEnemies = heavyEnemies;
             this.spriteBatch = spriteBatch;
             this.projectiles = projectiles;
+            this.explosions = explosions;
+            this.player = player;
+            this.mainBackground = mainBackground;
+            this.bgLayer1 = bgLayer1;
+            this.bgLayer2 = bgLayer2;
         }
 
         public void DrawAll()
         {
+            spriteBatch.Begin();
             DrawBackgrounds();
             DrawAllEnemies();
             DrawPlayerAndProjectiles();
+            spriteBatch.End();
         }
 
         private void DrawAllEnemies()

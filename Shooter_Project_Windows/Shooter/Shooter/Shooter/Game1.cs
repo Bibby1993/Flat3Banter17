@@ -44,8 +44,8 @@ namespace Shooter
 
         // Enemies
         Texture2D enemyTexture, heavyEnemyTexture;
-        public List<Enemy> enemies;
-        public List<HeavyEnemy> heavyEnemies;
+        List<Enemy> enemies;
+        List<HeavyEnemy> heavyEnemies;
 
         // The rate at which the enemies appear
         TimeSpan enemySpawnTime;
@@ -88,6 +88,8 @@ namespace Shooter
         TimeSpan previousFireTime;
         TimeSpan fireTimex2;
 
+        Drawer drawer;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -101,6 +103,8 @@ namespace Shooter
   
             explosions = new List<Animation>();
             state = gameState.startScreen;
+            drawer = new Drawer();
+
             //Set player's score to zero
             score = 0;
 
@@ -141,9 +145,6 @@ namespace Shooter
 
             // Set a constant player move speed
             playerMoveSpeed = 12.0f;
-
-            // TODO: Add your initialization logic here
-
             base.Initialize();
         }
 
@@ -256,7 +257,8 @@ namespace Shooter
 
                 // Update the explosions
                 UpdateExplosions(gameTime);
-
+                drawer.UpdateVariables(enemies, heavyEnemies, projectiles, explosions,
+                    spriteBatch, player, mainBackground, bgLayer1, bgLayer2);
                 base.Update(gameTime);
             }
         }
@@ -277,13 +279,12 @@ namespace Shooter
             {
 
                 GraphicsDevice.Clear(Color.CornflowerBlue);
-
+                drawer.UpdateVariables(enemies, heavyEnemies, projectiles, explosions,
+                    spriteBatch, player, mainBackground, bgLayer1, bgLayer2);
                 // Start drawing
-                spriteBatch.Begin();
-                DrawBackgrounds();
-                DrawAllEnemies();
-                DrawPlayerAndProjectiles();
+                drawer.DrawAll();
                 // Draw the score
+                spriteBatch.Begin();
                 spriteBatch.DrawString(font, "Score: " + score, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y), Color.White);
 
                 // Draw the player health
