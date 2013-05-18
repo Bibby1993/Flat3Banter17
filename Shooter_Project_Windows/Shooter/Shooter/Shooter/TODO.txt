@@ -1,1 +1,3 @@
 ﻿Condense draw list to make things easier - group enemies and heavy enemies to draw everything in one method.
+Add ship defence health.
+Add Missiles (counter and the rest).

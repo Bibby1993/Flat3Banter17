@@ -43,8 +43,8 @@ namespace Shooter
 
         // Enemies
         Texture2D enemyTexture, heavyEnemyTexture;
-        List<Enemy> enemies;
-        List<HeavyEnemy> heavyEnemies;
+        public List<Enemy> enemies;
+        public List<HeavyEnemy> heavyEnemies;
 
         // The rate at which the enemies appear
         TimeSpan enemySpawnTime;
@@ -273,51 +273,18 @@ namespace Shooter
 
                 GraphicsDevice.Clear(Color.CornflowerBlue);
 
-                // TODO: Add your drawing code here
-
                 // Start drawing
                 spriteBatch.Begin();
-
-                spriteBatch.Draw(mainBackground, Vector2.Zero, Color.White);
-
-                // Draw the moving background
-                bgLayer1.Draw(spriteBatch);
-                bgLayer2.Draw(spriteBatch);
-
-                // Draw the Enemies
-                for (int i = 0; i < enemies.Count; i++)
-                {
-                    enemies[i].Draw(spriteBatch);
-                }
-
-                // Draw the Heavy Enemies
-                for (int i = 0; i < heavyEnemies.Count; i++)
-                {
-                    heavyEnemies[i].Draw(spriteBatch);
-                }
-
+                DrawBackgrounds();
+                DrawAllEnemies();
+                DrawPlayerAndProjectiles();
                 // Draw the score
                 spriteBatch.DrawString(font, "Score: " + score, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y), Color.White);
 
                 // Draw the player health
                 spriteBatch.DrawString(font, "Health: " + player.Health, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y + 30), Color.White);
 
-                // Draw the Projectiles
-                for (int i = 0; i < projectiles.Count; i++)
-                {
-                    projectiles[i].Draw(spriteBatch);
-                }
-
-                // Draw the Player
-                player.Draw(spriteBatch);
-
-                // Draw the explosions
-                for (int i = 0; i < explosions.Count; i++)
-                {
-                    explosions[i].Draw(spriteBatch);
-                }
-
-                if (state == gameState.endScreen)
+                  if (state == gameState.endScreen)
                 {
                     spriteBatch.Begin();
                     spriteBatch.Draw(endMenu, Vector2.Zero, Color.White);
