@@ -255,6 +255,9 @@ namespace Shooter
                 // Update the missiles
                 UpdateMissiles();
 
+                //Check for missiles
+                CheckforMissile();
+
                 // Update the explosions
                 UpdateExplosions(gameTime);
                 base.Update(gameTime);
@@ -577,20 +580,20 @@ namespace Shooter
             catch { }
         }
     
-        private void ChaeckforMissile()
+        private void CheckforMissile()
         {
- 
+
+        
             if (currentKeyboardState.IsKeyDown(Keys.Space) ||
            GamePad.GetState(PlayerIndex.One).Buttons.RightShoulder == ButtonState.Pressed)
             {
-                if (missileCount > 0)
+                if(missileCount>0)
                 {
                     Missile missile = new Missile();
                     missile.Initialize(GraphicsDevice.Viewport, missileTexture, player.Position + new Vector2(player.Width / 2, 0));
                     missiles.Add(missile);
-                    missileCount--;
-
-            }
+                missileCount=missileCount-1;
+                }
             }
         }
 
