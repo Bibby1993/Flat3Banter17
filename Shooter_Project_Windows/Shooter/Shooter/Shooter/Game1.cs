@@ -241,7 +241,7 @@ namespace Shooter
                 UpdateEnemies(gameTime);
 
                 // Update the Heavy enemies
-                UpdateheavyEnemies(gameTime);
+                UpdateHeavyEnemies(gameTime);
 
                 // Update the collision
                 UpdateCollision();
@@ -478,7 +478,7 @@ namespace Shooter
 
         //==============================================================================================================================
 
-        private void UpdateheavyEnemies(GameTime gameTime)
+        private void UpdateHeavyEnemies(GameTime gameTime)
         {
             // Spawn a new enemy enemy every 1.5 seconds
             if (gameTime.TotalGameTime - previousheavyEnemySpawnTime > heavyEnemySpawnTime)
