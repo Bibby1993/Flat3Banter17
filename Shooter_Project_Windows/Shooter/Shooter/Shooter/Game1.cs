@@ -62,7 +62,7 @@ namespace Shooter
         TimeSpan fireTime;
         TimeSpan previousFireTime;
         TimeSpan fireTimex2;
-        TimeSpan fireTimex10;
+        TimeSpan fireTimex5;
         
         // The sound that is played when a laser is fired
         SoundEffect laserSound;
@@ -114,7 +114,7 @@ namespace Shooter
             fireTimex2 = TimeSpan.FromSeconds(.075f);
 
             //Set the laser to fire stupid as fast
-            fireTimex5 = TimeSpan.FromSeconds(.015f);
+            fireTimex5 = TimeSpan.FromSeconds(.03f);
 
             // Initialize the enemies list
             enemies = new List<Enemy>();
@@ -232,7 +232,7 @@ namespace Shooter
                 difficultyTimer++;
                 if (difficultyTimer / 1000 == 0)
                 {
-                    difficultyFactor -= 0.1f;
+                    difficultyFactor += 0.1f;
                 }
                 // Save the previous state of the keyboard and game pad so we can determinesingle key/button presses
                 previousGamePadState = currentGamePadState;
@@ -377,7 +377,7 @@ namespace Shooter
             //Last resort, stupid fire rate
             if (player.Health <= 5)
             {
-                fireTime = fireTimex10;
+                fireTime = fireTimex5;
             }
 
             // reset score if player health goes to zero
@@ -408,7 +408,7 @@ namespace Shooter
             Enemy enemy = new Enemy();
 
             // Initialize the enemy
-            enemy.Initialize(enemyAnimation, position);
+            enemy.Initialize(enemyAnimation, position, difficultyFactor);
 
             // Add the enemy to the active enemies list
             enemies.Add(enemy);
@@ -431,7 +431,7 @@ namespace Shooter
             HeavyEnemy heavyEnemy = new HeavyEnemy();
 
             // Initialize the enemy
-            heavyEnemy.Initialize(heavyEnemyAnimation, position);
+            heavyEnemy.Initialize(heavyEnemyAnimation, position, difficultyFactor);
 
             // Add the heavyEnemy to the active enemies list
             heavyEnemies.Add(heavyEnemy);
@@ -466,7 +466,7 @@ namespace Shooter
                         // Play the explosion sound
                         explosionSound.Play();
 
-                        score += (enemies[i].Value);
+                        score += ((int)enemies[i].Value);
 
                     }
 
@@ -508,7 +508,7 @@ namespace Shooter
                         // Play the explosion sound
                         explosionSound.Play();
 
-                        score += (heavyEnemies[i].heavyValue) ;
+                        score += ((int)heavyEnemies[i].heavyValue) ;
 
                     }
 

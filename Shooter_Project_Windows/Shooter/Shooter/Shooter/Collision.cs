@@ -50,7 +50,7 @@ namespace Shooter
                 {
                     // Subtract the health from the player based on
                     // the enemy damage
-                    player.Health -= enemies[i].Damage;
+                    player.Health -= (int)enemies[i].Damage;
 
                     // Since the enemy collided with the player
                     // destroy it
@@ -99,7 +99,7 @@ namespace Shooter
                 {
                     // Subtract the health from the player based on
                     // the enemy damage
-                    player.Health -= heavyEnemies[i].heavyDamage;
+                    player.Health -= (int)heavyEnemies[i].heavyDamage;
 
                     // Since the enemy collided with the player
                     // destroy it

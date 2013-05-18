@@ -20,13 +20,13 @@ namespace Shooter
         public bool heavyActive;
 
         // The hit points of the enemy, if this goes to zero the enemy dies
-        public int heavyHealth;
+        public float heavyHealth;
 
         // The amount of heavyDamage the enemy inflicts on the player ship
-        public int heavyDamage;
+        public float heavyDamage;
 
         // The amount of score the enemy will give to the player
-        public int heavyValue;
+        public float heavyValue;
 
         // Get the heavyWidth of the enemy ship
         public int heavyWidth
@@ -43,7 +43,7 @@ namespace Shooter
         // The speed at which the enemy moves
         float heavyenemyMoveSpeed;
 
-        public void Initialize(Animation animation, Vector2 vheavyPosition)
+        public void Initialize(Animation animation, Vector2 vheavyPosition, float df)
         {
             // Load the enemy ship texture
             heavyEnemyAnimation = animation;
@@ -56,17 +56,17 @@ namespace Shooter
 
 
             // Set the heavyHealth of the enemy
-            heavyHealth = 50;
+            heavyHealth = 50*df;
 
             // Set the amount of heavyDamage the enemy can do
-            heavyDamage = 30;
+            heavyDamage = 30*df;
 
             // Set how fast the enemy moves
-            heavyenemyMoveSpeed = 1f;
+            heavyenemyMoveSpeed = 1f*df;
 
 
             // Set the score heavyValue of the enemy
-            heavyValue = 500;
+            heavyValue = 500*df;
 
         }
 

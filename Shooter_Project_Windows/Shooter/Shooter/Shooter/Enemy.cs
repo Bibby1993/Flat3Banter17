@@ -17,13 +17,13 @@ namespace Shooter
         public bool Active;
 
         // The hit points of the enemy, if this goes to zero the enemy dies
-        public int Health;
+        public float Health;
 
         // The amount of damage the enemy inflicts on the player ship
-        public int Damage;
+        public float Damage;
 
         // The amount of score the enemy will give to the player
-        public int Value;
+        public float Value;
 
         // Get the width of the enemy ship
         public int Width
@@ -40,7 +40,7 @@ namespace Shooter
         // The speed at which the enemy moves
         float enemyMoveSpeed;
 
-        public void Initialize(Animation animation, Vector2 position)
+        public void Initialize(Animation animation, Vector2 position, float df)
         {
             // Load the enemy ship texture
             EnemyAnimation = animation;
@@ -53,17 +53,17 @@ namespace Shooter
 
 
             // Set the health of the enemy
-            Health = 5;
+            Health = 5*df;
 
             // Set the amount of damage the enemy can do
-            Damage = 5;
+            Damage = 5*df;
 
             // Set how fast the enemy moves
-            enemyMoveSpeed = 6f;
+            enemyMoveSpeed = 6f*df;
 
 
             // Set the score value of the enemy
-            Value = 100;
+            Value = 100*df;
 
         }
 
