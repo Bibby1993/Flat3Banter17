@@ -20,6 +20,7 @@ namespace Shooter
         SpriteBatch spriteBatch;
         enum gameState {startScreen, playing, endScreen};
         gameState state;
+
         // Represents the player 
         Player player;
 
@@ -538,28 +539,6 @@ namespace Shooter
 
             }
 
-            // Projectile vs Enemy Collision
-            for (int i = 0; i < projectiles.Count; i++)
-            {
-                for (int j = 0; j < enemies.Count; j++)
-                {
-                    // Create the rectangles we need to determine if we collided with each other
-                    rectangle1 = new Rectangle((int)projectiles[i].Position.X -
-                    projectiles[i].Width / 2, (int)projectiles[i].Position.Y -
-                    projectiles[i].Height / 2, projectiles[i].Width, projectiles[i].Height);
-
-                    rectangle2 = new Rectangle((int)enemies[j].Position.X - enemies[j].Width / 2,
-                    (int)enemies[j].Position.Y - enemies[j].Height / 2,
-                    enemies[j].Width, enemies[j].Height);
-
-                    // Determine if the two objects collided with each other
-                    if (rectangle1.Intersects(rectangle2))
-                    {
-                        enemies[j].Health -= projectiles[i].Damage;
-                        projectiles[i].Active = false;
-                    }
-                }
-            }
 
             // Do the collision between the player and the heavyEnemies
             for (int i = 0; i < heavyEnemies.Count; i++)
@@ -586,6 +565,29 @@ namespace Shooter
                         player.Active = false;
                 }
 
+            }
+
+            // Projectile vs Enemy Collision
+            for (int i = 0; i < projectiles.Count; i++)
+            {
+                for (int j = 0; j < enemies.Count; j++)
+                {
+                    // Create the rectangles we need to determine if we collided with each other
+                    rectangle1 = new Rectangle((int)projectiles[i].Position.X -
+                    projectiles[i].Width / 2, (int)projectiles[i].Position.Y -
+                    projectiles[i].Height / 2, projectiles[i].Width, projectiles[i].Height);
+
+                    rectangle2 = new Rectangle((int)enemies[j].Position.X - enemies[j].Width / 2,
+                    (int)enemies[j].Position.Y - enemies[j].Height / 2,
+                    enemies[j].Width, enemies[j].Height);
+
+                    // Determine if the two objects collided with each other
+                    if (rectangle1.Intersects(rectangle2))
+                    {
+                        enemies[j].Health -= projectiles[i].Damage;
+                        projectiles[i].Active = false;
+                    }
+                }
             }
 
             // Projectile vs Heavy Enemy Collision
