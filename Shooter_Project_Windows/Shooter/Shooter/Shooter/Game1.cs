@@ -42,7 +42,7 @@ namespace Shooter
         ParallaxingBackground bgLayer2;
 
         // Enemies
-        Texture2D enemyTexture;
+        Texture2D enemyTexture, heavyEnemyTexture;
         List<Enemy> enemies;
         List<HeavyEnemy> heavyEnemies;
 
@@ -163,6 +163,7 @@ namespace Shooter
             bgLayer2.Initialize(Content, "bglayer2", GraphicsDevice.Viewport.Width, -2);
 
             enemyTexture = Content.Load<Texture2D>("mineAnimation");
+            heavyEnemyTexture = Content.Load<Texture2D>("mineHeavyAnimation");
 
             projectileTexture = Content.Load<Texture2D>("laser");
 
@@ -422,10 +423,10 @@ namespace Shooter
             Animation heavyEnemyAnimation = new Animation();
 
             // Initialize the animation with the correct animation information
-            heavyEnemyAnimation.Initialize(enemyTexture, Vector2.Zero, 47, 61, 8, 30, Color.White, 1f, true);
+            heavyEnemyAnimation.Initialize(heavyEnemyTexture, Vector2.Zero, 47, 61, 8, 30, Color.White, 1f, true);
 
             // Randomly generate the position of the enemy
-            Vector2 position = new Vector2(GraphicsDevice.Viewport.Width + enemyTexture.Width / 2, random.Next(100, GraphicsDevice.Viewport.Height - 100));
+            Vector2 position = new Vector2(GraphicsDevice.Viewport.Width + heavyEnemyTexture.Width / 2, random.Next(100, GraphicsDevice.Viewport.Height - 100));
 
             // Create an enemy
             HeavyEnemy heavyEnemy = new HeavyEnemy();
