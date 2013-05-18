@@ -120,8 +120,14 @@ namespace Shooter
             // Set the time keepers to zero
             previousSpawnTime = TimeSpan.Zero;
 
+            // Set the time keepers to zero
+            previousheavyEnemySpawnTime = TimeSpan.Zero;
+
             // Used to determine how fast enemy respawns
             enemySpawnTime = TimeSpan.FromSeconds(1.0f);
+
+            // Used to determine how fast enemy respawns
+            heavyEnemySpawnTime = TimeSpan.FromSeconds(1.0f);
 
             // Initialize our random number generator
             random = new Random();
@@ -431,7 +437,7 @@ namespace Shooter
             // Initialize the enemy
             heavyEnemy.Initialize(heavyEnemyAnimation, position);
 
-            // Add the enemy to the active enemies list
+            // Add the heavyEnemy to the active enemies list
             heavyEnemies.Add(heavyEnemy);
         }
         //==============================================================================================================================
@@ -480,7 +486,7 @@ namespace Shooter
             // Spawn a new enemy enemy every 1.5 seconds
             if (gameTime.TotalGameTime - previousheavyEnemySpawnTime > heavyEnemySpawnTime)
             {
-                previousSpawnTime = gameTime.TotalGameTime;
+                previousheavyEnemySpawnTime = gameTime.TotalGameTime;
 
                 // Add an Heavy Enemy
                 AddHeavyEnemy();
