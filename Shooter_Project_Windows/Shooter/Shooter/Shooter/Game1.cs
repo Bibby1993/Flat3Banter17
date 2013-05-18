@@ -114,6 +114,9 @@ namespace Shooter
             // Initialize the enemies list
             enemies = new List<Enemy>();
 
+            // Initialize the heavyEnemies list
+            heavyEnemies = new List<HeavyEnemy>();
+
             // Set the time keepers to zero
             previousSpawnTime = TimeSpan.Zero;
 
@@ -130,7 +133,7 @@ namespace Shooter
             player = new Player();
 
             // Set a constant player move speed
-            playerMoveSpeed = 16.0f;
+            playerMoveSpeed = 12.0f;
 
             // TODO: Add your initialization logic here
 
@@ -284,7 +287,7 @@ namespace Shooter
                     enemies[i].Draw(spriteBatch);
                 }
 
-                // Draw the Enemies
+                // Draw the Heavy Enemies
                 for (int i = 0; i < enemies.Count; i++)
                 {
                     heavyEnemies[i].Draw(spriteBatch);
@@ -423,15 +426,15 @@ namespace Shooter
             }
 
             // Update the Enemies
-            for (int i = heavyEnemies.Count - 1; i >= 0; i--)
+            for (int i = enemies.Count - 1; i >= 0; i--)
             {
-                heavyEnemies[i].Update(gameTime);
+                enemies[i].Update(gameTime);
 
-                if (heavyEnemies[i].heavyActive == false)
+                if (enemies[i].Active == false)
                 {
 
                     // If not active and health <= 0
-                    if (heavyEnemies[i].heavyHealth <= 0)
+                    if (enemies[i].Health <= 0)
                     {
                         // Add an explosion
                         AddExplosion(enemies[i].Position);
@@ -439,7 +442,7 @@ namespace Shooter
                         // Play the explosion sound
                         explosionSound.Play();
 
-                        score += (heavyEnemies[i].heavyValue)*1232/1000;
+                        score += (enemies[i].Value)*1232/1000;
 
                     }
 
@@ -461,24 +464,24 @@ namespace Shooter
                 AddEnemy();
             }
 
-            // Update the Enemies
-            for (int i = enemies.Count - 1; i >= 0; i--)
+            // Update the Heavy Enemies
+            for (int i = heavyEnemies.Count - 1; i >= 0; i--)
             {
                 heavyEnemies[i].Update(gameTime);
 
-                if (heavyEnemies[i].Active == false)
+                if (heavyEnemies[i].heavyActive == false)
                 {
 
                     // If not active and health <= 0
-                    if (heavyEnemies[i].Health <= 0)
+                    if (heavyEnemies[i].heavyHealth <= 0)
                     {
                         // Add an explosion
-                        AddExplosion(enemies[i].Position);
+                        AddExplosion(heavyEnemies[i].heavyPosition);
 
                         // Play the explosion sound
                         explosionSound.Play();
 
-                        score += (heavyEnemies[i].Value) * 1232 / 1000;
+                        score += (heavyEnemies[i].heavyValue) * 1232 / 1000;
 
                     }
 
