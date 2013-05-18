@@ -8,64 +8,64 @@ namespace Shooter
     {
 
 
-        // Image representing the Projectile
-        public Texture2D Texture;
+        // Image representing the missile
+        public Texture2D missileTexture;
 
-        // Position of the Projectile relative to the upper left side of the screen
-        public Vector2 Position;
+        // Position of the missile relative to the upper left side of the screen
+        public Vector2 missilePosition;
 
-        // State of the Projectile
-        public bool Active;
+        // State of the missile
+        public bool missileActive;
 
-        // The amount of damage the projectile can inflict to an enemy
-        public int Damage;
+        // The amount of damage the missile can inflict to an enemy
+        public int missileDamage;
 
         // Represents the viewable boundary of the game
-        Viewport viewport;
+        Viewport missileviewport;
 
-        // Get the width of the projectile ship
-        public int Width
+        // Get the width of the missile ship
+        public int missileWidth
         {
-            get { return Texture.Width; }
+            get { return missileTexture.Width; }
         }
 
-        // Get the height of the projectile ship
-        public int Height
+        // Get the height of the missile ship
+        public int missileHeight
         {
-            get { return Texture.Height; }
+            get { return missileTexture.Height; }
         }
 
-        // Determines how fast the projectile moves
-        float projectileMoveSpeed;
+        // Determines how fast the missile moves
+        float missileMoveSpeed;
 
 
         public void Initialize(Viewport viewport, Texture2D texture, Vector2 position)
         {
-            Texture = texture;
-            Position = position;
-            this.viewport = viewport;
+            missileTexture = texture;
+            missilePosition = position;
+            this.missileviewport = viewport;
 
-            Active = true;
+            missileActive = true;
 
-            Damage = 2;
+            missileDamage = 2;
 
-            projectileMoveSpeed = 20f;
+            missileMoveSpeed = 20f;
         }
 
         public void Update()
         {
-            // Projectiles always move to the right
-            Position.X += projectileMoveSpeed;
+            // misssiles always move to the right
+            missilePosition.X += missileMoveSpeed;
 
             // Deactivate the bullet if it goes out of screen
-            if (Position.X + Texture.Width / 2 > viewport.Width)
-                Active = false;
+            if (missilePosition.X + missileTexture.Width / 2 > missileviewport.Width)
+                missileActive = false;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, Position, null, Color.White, 0f,
-            new Vector2(Width / 2, Height / 2), 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(missileTexture, missilePosition, null, Color.White, 0f,
+            new Vector2(missileWidth / 2, missileHeight / 2), 1f, SpriteEffects.None, 0f);
         }
 
 
