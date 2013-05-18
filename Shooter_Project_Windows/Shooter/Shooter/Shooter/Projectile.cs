@@ -50,7 +50,7 @@ namespace Shooter
 
             Damage = 2;
 
-            projectileMoveSpeed = 20f;
+            projectileMoveSpeed = 5f;
         }
 
         public void Update()

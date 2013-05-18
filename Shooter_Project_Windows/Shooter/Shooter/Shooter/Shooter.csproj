@@ -112,6 +112,7 @@
     <Compile Include="Drawer.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="HeavyEnemy.cs" />
+    <Compile Include="Missile.cs" />
     <Compile Include="ParallaxingBackground.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Projectile.cs" />
