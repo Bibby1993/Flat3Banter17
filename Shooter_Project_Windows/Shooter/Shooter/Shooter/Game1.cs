@@ -69,7 +69,7 @@ namespace Shooter
         Song gameplayMusic;
 
         //Number that holds the player score
-        int score, lastScore, missileCount;
+        int score, lastScore, missileCount, missileTimer;
 
         // The font used to display UI elements
         SpriteFont font;
@@ -97,7 +97,7 @@ namespace Shooter
 
             //Set player's score to zero
             score = 0;
-            missileCount = 3;
+            missileCount = 3; missileTimer = 60;
 
             projectiles = new List<Projectile>();
 
@@ -579,18 +579,20 @@ namespace Shooter
     
         private void ChaeckforMissile()
         {
-
-        
+            if (missileTimer < 60)
+                missileTimer++;
+        if (missileTimer>=60){
             if (currentKeyboardState.IsKeyDown(Keys.Space) ||
            GamePad.GetState(PlayerIndex.One).Buttons.RightShoulder == ButtonState.Pressed)
             {
-                if(missileCount>0)
+                if (missileCount > 0)
                 {
                     Missile missile = new Missile();
                     missile.Initialize(GraphicsDevice.Viewport, missileTexture, player.Position + new Vector2(player.Width / 2, 0));
                     missiles.Add(missile);
-                missileCount--;
+                    missileCount--;
                 }
+            }
             }
         }
 
