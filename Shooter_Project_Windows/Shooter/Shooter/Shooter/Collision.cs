@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -40,7 +40,7 @@ namespace Shooter
             for (int i = 0; i < enemies.Count; i++)
             {
                 r2 = new Rectangle((int)enemies[i].Position.X,
-                (int)enemies[i].Position.Y,
+                (int)enemies[i].Position.Y - enemies[i].Height / 2 ,
                 enemies[i].Width,
                 enemies[i].Height);
 
@@ -89,7 +89,7 @@ namespace Shooter
             for (int i = 0; i < heavyEnemies.Count; i++)
             {
                 r2= new Rectangle((int)heavyEnemies[i].heavyPosition.X,
-                (int)heavyEnemies[i].heavyPosition.Y,
+                (int)heavyEnemies[i].heavyPosition.Y - heavyEnemies[i].heavyWidth / 2,
                 heavyEnemies[i].heavyWidth,
                 heavyEnemies[i].heavyHeight);
 
