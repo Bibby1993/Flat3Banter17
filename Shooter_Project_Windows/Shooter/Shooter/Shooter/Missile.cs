@@ -47,7 +47,7 @@ namespace Shooter
 
             missileActive = true;
 
-            missileDamage = 2;
+            missileDamage = 45;
 
             missileMoveSpeed = 5f;
         }
