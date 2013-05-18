@@ -85,6 +85,7 @@ namespace Shooter
         // The rate of fire of the player laser
         TimeSpan fireTime;
         TimeSpan previousFireTime;
+        TimeSpan fireTimex2;
 
         public Game1()
         {
@@ -106,6 +107,9 @@ namespace Shooter
 
             // Set the laser to fire every quarter second
             fireTime = TimeSpan.FromSeconds(.15f);
+
+            //Set the laser to fire twice as fast
+            fireTimex2 = TimeSpan.FromSeconds(.075f);
 
             // Initialize the enemies list
             enemies = new List<Enemy>();
@@ -264,8 +268,8 @@ namespace Shooter
             {
                 spriteBatch.Begin();
                 spriteBatch.Draw(mainMenu, Vector2.Zero, Color.White);
-                spriteBatch.DrawString(font, "Last score: " + lastScore, new Vector2((GraphicsDevice.Viewport.Width+23)/3, GraphicsDevice.Viewport.Height-250), Color.PeachPuff);
-                spriteBatch.DrawString(font, "Press enter or A on gamepad to start", new Vector2((GraphicsDevice.Viewport.Width+23)/3, GraphicsDevice.Viewport.Height-280), Color.DarkGoldenrod);
+                spriteBatch.DrawString(font, "Last score: " + lastScore, new Vector2((GraphicsDevice.Viewport.Width+127)/3, GraphicsDevice.Viewport.Height-200), Color.White);
+                spriteBatch.DrawString(font, "Press enter or A on gamepad to start", new Vector2((GraphicsDevice.Viewport.Width-310)/3, GraphicsDevice.Viewport.Height-280), Color.White);
                 spriteBatch.End();
             }
             else if (state==gameState.playing)
@@ -346,6 +350,12 @@ namespace Shooter
                 // Play the laser sound
                 laserSound.Play();
 
+            }
+
+            //Last resort, double fiire rate
+            if (player.Health <= 20)
+            {
+                fireTime = fireTimex2;
             }
 
             // reset score if player health goes to zero

@@ -54,17 +54,17 @@ namespace Shooter
 
 
             // Set the heavyHealth of the enemy
-            heavyHealth = 500;
+            heavyHealth = 50;
 
             // Set the amount of heavyDamage the enemy can do
-            heavyDamage = 10;
+            heavyDamage = 30;
 
             // Set how fast the enemy moves
             heavyenemyMoveSpeed = 1f;
 
 
             // Set the score heavyValue of the enemy
-            heavyValue = 100;
+            heavyValue = 300;
 
         }
 
