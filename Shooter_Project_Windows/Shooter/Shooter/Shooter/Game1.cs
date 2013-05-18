@@ -68,6 +68,7 @@ namespace Shooter
         SoundEffect laserSound;
         SoundEffect explosionSound;
         Song gameplayMusic;
+        Song cryingSound;
 
         //Number that holds the player score
         int score, lastScore, missileCount, missileTimer, difficultyTimer;
@@ -179,6 +180,7 @@ namespace Shooter
 
             // Load the music
             gameplayMusic = Content.Load<Song>("sound/gameMusic");
+            cryingSound = Content.Load<Song>("sound/crying_loud_male");
 
             // Load the laser and explosion sound effect
             laserSound = Content.Load<SoundEffect>("sound/laserFire");
@@ -385,6 +387,9 @@ namespace Shooter
             if (player.Health <= 0)
             {
                 lastScore = score;
+
+                //Play the crying man
+                CryingSound(cryingSound);
                 score = 0;
                 player.Health = 100;
                 state = gameState.startScreen;
@@ -597,7 +602,23 @@ namespace Shooter
             }
             catch { }
         }
-    
+
+        private void CryingSound(Song song)
+        {
+            // Due to the way the MediaPlayer plays music,
+            // we have to catch the exception. Music will play when the game is not tethered
+            try
+            {
+                // Play the music
+                MediaPlayer.Play(song);
+
+                // Don't loop the currently playing song
+                MediaPlayer.IsRepeating = false;
+            }
+            catch { }
+        }
+
+
         private void CheckforMissile()
         {
 
