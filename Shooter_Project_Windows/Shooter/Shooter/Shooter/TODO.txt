@@ -1,0 +1,1 @@
+﻿Condense draw list to make things easier - group enemies and heavy enemies to draw everything in one method.
