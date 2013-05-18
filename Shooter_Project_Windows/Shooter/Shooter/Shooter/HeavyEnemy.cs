@@ -7,9 +7,6 @@ namespace Shooter
 {
     class HeavyEnemy
     {
-        //integers
-        int i;
-
         // Animation representing the enemy
         public Animation heavyEnemyAnimation;
 

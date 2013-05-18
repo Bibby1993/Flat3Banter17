@@ -230,9 +230,10 @@ namespace Shooter
                 if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                     this.Exit();
                 difficultyTimer++;
-                if (difficultyTimer / 1000 == 0)
+                if (difficultyTimer / 1000 == 1)
                 {
                     difficultyFactor += 0.1f;
+                    difficultyTimer = 0;
                 }
                 // Save the previous state of the keyboard and game pad so we can determinesingle key/button presses
                 previousGamePadState = currentGamePadState;
