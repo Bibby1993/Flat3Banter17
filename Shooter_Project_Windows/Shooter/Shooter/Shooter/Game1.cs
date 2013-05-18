@@ -291,7 +291,7 @@ namespace Shooter
                 }
 
                 // Draw the Heavy Enemies
-                for (int i = 0; i < enemies.Count; i++)
+                for (int i = 0; i < heavyEnemies.Count; i++)
                 {
                     heavyEnemies[i].Draw(spriteBatch);
                 }
@@ -481,14 +481,17 @@ namespace Shooter
         private void UpdateHeavyEnemies(GameTime gameTime)
         {
             // Spawn a new enemy enemy every 1.5 seconds
-            if (gameTime.TotalGameTime - previousheavyEnemySpawnTime > heavyEnemySpawnTime)
+           /* if (gameTime.TotalGameTime - previousheavyEnemySpawnTime > heavyEnemySpawnTime)
             {
                 previousheavyEnemySpawnTime = gameTime.TotalGameTime;
 
                 // Add an Heavy Enemy
                 AddHeavyEnemy();
             }
+            */
 
+            if (heavyEnemies.Count <= 0)
+                AddHeavyEnemy();
             // Update the Heavy Enemies
             for (int i = heavyEnemies.Count - 1; i >= 0; i--)
             {
