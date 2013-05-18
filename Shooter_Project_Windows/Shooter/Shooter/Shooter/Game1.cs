@@ -371,6 +371,8 @@ namespace Shooter
 
         }
 
+        //==============================================================================================================================
+
         private void AddEnemy()
         {
             // Create the animation object
@@ -391,6 +393,8 @@ namespace Shooter
             // Add the enemy to the active enemies list
             enemies.Add(enemy);
         }
+
+        //==============================================================================================================================
 
         private void UpdateEnemies(GameTime gameTime)
         {
@@ -428,6 +432,8 @@ namespace Shooter
                 }
             }
         }
+
+        //==============================================================================================================================
 
         private void UpdateCollision()
         {
@@ -494,12 +500,16 @@ namespace Shooter
 
         }
 
+        //==============================================================================================================================
+
         private void AddProjectile(Vector2 position)
         {
             Projectile projectile = new Projectile();
             projectile.Initialize(GraphicsDevice.Viewport, projectileTexture, position);
             projectiles.Add(projectile);
         }
+
+        //==============================================================================================================================
 
         private void UpdateProjectiles()
         {
@@ -515,12 +525,16 @@ namespace Shooter
             }
         }
 
+        //==============================================================================================================================
+
         private void AddExplosion(Vector2 position)
         {
             Animation explosion = new Animation();
             explosion.Initialize(explosionTexture, position, 134, 134, 12, 45, Color.White, 1f, false);
             explosions.Add(explosion);
         }
+
+        //==============================================================================================================================
 
         private void UpdateExplosions(GameTime gameTime)
         {
@@ -533,6 +547,8 @@ namespace Shooter
                 }
             }
         }
+
+        //==============================================================================================================================
 
         private void PlayMusic(Song song)
         {
