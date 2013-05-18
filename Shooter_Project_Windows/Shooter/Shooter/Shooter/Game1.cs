@@ -51,8 +51,8 @@ namespace Shooter
         TimeSpan previousSpawnTime;
         
         // The rate at which the Heavy enemies appear
-        TimeSpan HeavyenemySpawnTime;
-        TimeSpan previousHeavyenemySpawnTime;
+        TimeSpan heavyEnemySpawnTime;
+        TimeSpan previousheavyEnemySpawnTime;
 
         //Main and end menus
         Texture2D mainMenu;
@@ -414,6 +414,28 @@ namespace Shooter
 
         //==============================================================================================================================
 
+        private void AddHeavyEnemy()
+        {
+            // Create the animation object
+            Animation heavyEnemyAnimation = new Animation();
+
+            // Initialize the animation with the correct animation information
+            heavyEnemyAnimation.Initialize(enemyTexture, Vector2.Zero, 47, 61, 8, 30, Color.White, 1f, true);
+
+            // Randomly generate the position of the enemy
+            Vector2 position = new Vector2(GraphicsDevice.Viewport.Width + enemyTexture.Width / 2, random.Next(100, GraphicsDevice.Viewport.Height - 100));
+
+            // Create an enemy
+            HeavyEnemy heavyEnemy = new HeavyEnemy();
+
+            // Initialize the enemy
+            heavyEnemy.Initialize(heavyEnemyAnimation, position);
+
+            // Add the enemy to the active enemies list
+            heavyEnemies.Add(heavyEnemy);
+        }
+        //==============================================================================================================================
+
         private void UpdateEnemies(GameTime gameTime)
         {
             // Spawn a new enemy enemy every 1.5 seconds
@@ -456,12 +478,12 @@ namespace Shooter
         private void UpdateheavyEnemies(GameTime gameTime)
         {
             // Spawn a new enemy enemy every 1.5 seconds
-            if (gameTime.TotalGameTime - previousSpawnTime > enemySpawnTime)
+            if (gameTime.TotalGameTime - previousheavyEnemySpawnTime > heavyEnemySpawnTime)
             {
                 previousSpawnTime = gameTime.TotalGameTime;
 
-                // Add an Enemy
-                AddEnemy();
+                // Add an Heavy Enemy
+                AddHeavyEnemy();
             }
 
             // Update the Heavy Enemies
