@@ -243,8 +243,6 @@ namespace Shooter
 
                 // Update the explosions
                 UpdateExplosions(gameTime);
-                drawer.UpdateVariables(enemies, heavyEnemies, projectiles, explosions,
-                    spriteBatch, player, mainBackground, bgLayer1, bgLayer2);
                 base.Update(gameTime);
             }
         }
