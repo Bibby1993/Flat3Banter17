@@ -110,6 +110,7 @@
   <ItemGroup>
     <Compile Include="Animation.cs" />
     <Compile Include="Enemy.cs" />
+    <Compile Include="HeavyEnemy.cs" />
     <Compile Include="ParallaxingBackground.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Projectile.cs" />

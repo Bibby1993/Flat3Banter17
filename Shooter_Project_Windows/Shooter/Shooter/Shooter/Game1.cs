@@ -48,6 +48,10 @@ namespace Shooter
         TimeSpan enemySpawnTime;
         TimeSpan previousSpawnTime;
 
+        //Main and end menus
+        Texture2D mainMenu;
+        Texture2D endMenu;
+
         Texture2D explosionTexture;
         List<Animation> explosions;
 
@@ -89,6 +93,7 @@ namespace Shooter
         protected override void Initialize()
         {
             Playing = false;
+
 
             explosions = new List<Animation>();
 
@@ -165,7 +170,11 @@ namespace Shooter
             // Load the score font
             font = Content.Load<SpriteFont>("gameFont");
 
-            mainBackground = Content.Load<Texture2D>("Jamesss");
+            mainBackground = Content.Load<Texture2D>("mainbackground");
+
+            mainMenu = Content.Load<Texture2D>("mainMenu");
+
+            endMenu = Content.Load<Texture2D>("endMenu");
 
             // TODO: use this.Content to load your game content here
         }
@@ -239,6 +248,7 @@ namespace Shooter
             if (Playing == false)
             {
                 spriteBatch.Begin();
+                spriteBatch.Draw(mainMenu, Vector2.Zero, Color.White);
                 spriteBatch.DrawString(font, "Last score: " + lastScore, new Vector2((GraphicsDevice.Viewport.Width+23)/3, GraphicsDevice.Viewport.Height-250), Color.PeachPuff);
                 spriteBatch.DrawString(font, "Press enter to start", new Vector2((GraphicsDevice.Viewport.Width+23)/3, GraphicsDevice.Viewport.Height-280), Color.DarkGoldenrod);
                 spriteBatch.End();
@@ -286,12 +296,21 @@ namespace Shooter
                     explosions[i].Draw(spriteBatch);
                 }
 
+                if (Playing == false)
+                {
+                    spriteBatch.Begin();
+                    spriteBatch.Draw(endMenu, Vector2.Zero, Color.White);
+                    spriteBatch.End();
+                }
+
                 // Stop drawing
                 spriteBatch.End();
 
                 base.Draw(gameTime);
             }
         }
+
+        //===================================================================================================================================
 
         private void UpdatePlayer(GameTime gameTime)
         {
