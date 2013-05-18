@@ -18,7 +18,7 @@ namespace Shooter
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        
+        enum gameState {startScreen, playing, endScreen};
         // Represents the player 
         Player player;
 
