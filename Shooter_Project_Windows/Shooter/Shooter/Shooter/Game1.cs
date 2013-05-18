@@ -69,6 +69,7 @@ namespace Shooter
         SoundEffect explosionSound;
         Song gameplayMusic;
         Song cryingSound;
+        SoundEffect explosionSound2;
 
         //Number that holds the player score
         int score, lastScore, missileCount, missileTimer, difficultyTimer;
@@ -185,6 +186,7 @@ namespace Shooter
             // Load the laser and explosion sound effect
             laserSound = Content.Load<SoundEffect>("sound/laserFire");
             explosionSound = Content.Load<SoundEffect>("sound/explosion");
+            explosionSound2 = Content.Load<SoundEffect>("sound/explosion-04");
 
             // Start the music right away
             PlayMusic(gameplayMusic);
@@ -512,7 +514,7 @@ namespace Shooter
                         AddExplosion(heavyEnemies[i].heavyPosition);
 
                         // Play the explosion sound
-                        explosionSound.Play();
+                        explosionSound2.Play();
 
                         score += ((int)heavyEnemies[i].heavyValue) ;
 
