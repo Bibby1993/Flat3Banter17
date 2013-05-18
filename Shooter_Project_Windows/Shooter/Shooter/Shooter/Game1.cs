@@ -44,10 +44,15 @@ namespace Shooter
         // Enemies
         Texture2D enemyTexture;
         List<Enemy> enemies;
+        List<HeavyEnemy> heavyEnemies;
 
         // The rate at which the enemies appear
         TimeSpan enemySpawnTime;
         TimeSpan previousSpawnTime;
+        
+        // The rate at which the Heavy enemies appear
+        TimeSpan HeavyenemySpawnTime;
+        TimeSpan previousHeavyenemySpawnTime;
 
         //Main and end menus
         Texture2D mainMenu;
@@ -229,6 +234,9 @@ namespace Shooter
                 // Update the enemies
                 UpdateEnemies(gameTime);
 
+                // Update the Heavy enemies
+                UpdateheavyEnemies(gameTime);
+
                 // Update the collision
                 UpdateCollision();
 
@@ -274,6 +282,12 @@ namespace Shooter
                 for (int i = 0; i < enemies.Count; i++)
                 {
                     enemies[i].Draw(spriteBatch);
+                }
+
+                // Draw the Enemies
+                for (int i = 0; i < enemies.Count; i++)
+                {
+                    heavyEnemies[i].Draw(spriteBatch);
                 }
 
                 // Draw the score
@@ -409,15 +423,15 @@ namespace Shooter
             }
 
             // Update the Enemies
-            for (int i = enemies.Count - 1; i >= 0; i--)
+            for (int i = heavyEnemies.Count - 1; i >= 0; i--)
             {
-                enemies[i].Update(gameTime);
+                heavyEnemies[i].Update(gameTime);
 
-                if (enemies[i].Active == false)
+                if (heavyEnemies[i].heavyActive == false)
                 {
 
                     // If not active and health <= 0
-                    if (enemies[i].Health <= 0)
+                    if (heavyEnemies[i].heavyHealth <= 0)
                     {
                         // Add an explosion
                         AddExplosion(enemies[i].Position);
@@ -425,11 +439,50 @@ namespace Shooter
                         // Play the explosion sound
                         explosionSound.Play();
 
-                        score += (enemies[i].Value)*1232/1000;
+                        score += (heavyEnemies[i].heavyValue)*1232/1000;
 
                     }
 
                     enemies.RemoveAt(i);
+                }
+            }
+        }
+
+        //==============================================================================================================================
+
+        private void UpdateheavyEnemies(GameTime gameTime)
+        {
+            // Spawn a new enemy enemy every 1.5 seconds
+            if (gameTime.TotalGameTime - previousSpawnTime > enemySpawnTime)
+            {
+                previousSpawnTime = gameTime.TotalGameTime;
+
+                // Add an Enemy
+                AddEnemy();
+            }
+
+            // Update the Enemies
+            for (int i = enemies.Count - 1; i >= 0; i--)
+            {
+                heavyEnemies[i].Update(gameTime);
+
+                if (heavyEnemies[i].Active == false)
+                {
+
+                    // If not active and health <= 0
+                    if (heavyEnemies[i].Health <= 0)
+                    {
+                        // Add an explosion
+                        AddExplosion(enemies[i].Position);
+
+                        // Play the explosion sound
+                        explosionSound.Play();
+
+                        score += (heavyEnemies[i].Value) * 1232 / 1000;
+
+                    }
+
+                    heavyEnemies.RemoveAt(i);
                 }
             }
         }
