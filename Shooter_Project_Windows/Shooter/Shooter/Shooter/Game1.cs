@@ -67,7 +67,7 @@ namespace Shooter
         Song gameplayMusic;
 
         //Number that holds the player score
-        int score, lastScore;
+        int score, lastScore, missileCount;
 
         // The font used to display UI elements
         SpriteFont font;
@@ -93,6 +93,7 @@ namespace Shooter
 
             //Set player's score to zero
             score = 0;
+            missileCount = 3;
 
             projectiles = new List<Projectile>();
 
@@ -264,7 +265,7 @@ namespace Shooter
 
                 GraphicsDevice.Clear(Color.CornflowerBlue);
                 drawer.UpdateVariables(enemies, heavyEnemies, projectiles, explosions,
-                    spriteBatch, player, mainBackground, bgLayer1, bgLayer2);
+                    spriteBatch, player, mainBackground, bgLayer1, bgLayer2, missiles);
                 // Start drawing
                 drawer.DrawAll();
                 // Draw the score

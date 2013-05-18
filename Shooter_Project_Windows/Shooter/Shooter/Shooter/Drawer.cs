@@ -17,6 +17,7 @@ namespace Shooter
         List<HeavyEnemy> heavyEnemies;
         SpriteBatch spriteBatch;
         List<Projectile> projectiles;
+        List<Missile> missiles;
         Player player;
         List<Animation> explosions;
         Texture2D mainBackground;
@@ -26,7 +27,7 @@ namespace Shooter
 
         public void UpdateVariables(List<Enemy> enemies, List<HeavyEnemy> heavyEnemies, List<Projectile> projectiles,
             List<Animation> explosions, SpriteBatch spriteBatch, Player player, Texture2D mainBackground,
-            ParallaxingBackground bgLayer1, ParallaxingBackground bgLayer2)
+            ParallaxingBackground bgLayer1, ParallaxingBackground bgLayer2, List<Missile> missiles)
         {
             this.enemies = enemies;
             this.heavyEnemies = heavyEnemies;
@@ -37,6 +38,7 @@ namespace Shooter
             this.mainBackground = mainBackground;
             this.bgLayer1 = bgLayer1;
             this.bgLayer2 = bgLayer2;
+            this.missiles = missiles;
         }
 
         public void DrawAll()
@@ -70,6 +72,12 @@ namespace Shooter
             {
                 projectiles[i].Draw(spriteBatch);
             }
+
+            for (int i = 0; i < missiles.Count; i++)
+            {
+                missiles[i].Draw(spriteBatch);
+            }
+                    
 
             // Draw the Player
             player.Draw(spriteBatch);
