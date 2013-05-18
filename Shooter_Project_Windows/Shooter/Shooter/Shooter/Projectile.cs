@@ -1,6 +1,4 @@
-﻿// Projectile.cs
-//Using declarations
-using System;
+﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -50,7 +48,7 @@ namespace Shooter
 
             Damage = 2;
 
-            projectileMoveSpeed = 5f;
+            projectileMoveSpeed = 20f;
         }
 
         public void Update()

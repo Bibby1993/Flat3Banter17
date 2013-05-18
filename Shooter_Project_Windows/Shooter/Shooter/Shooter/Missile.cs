@@ -49,12 +49,12 @@ namespace Shooter
 
             missileDamage = 2;
 
-            missileMoveSpeed = 20f;
+            missileMoveSpeed = 5f;
         }
 
         public void Update()
         {
-            // misssiles always move to the right
+            // missiles always move to the right
             missilePosition.X += missileMoveSpeed;
 
             // Deactivate the bullet if it goes out of screen

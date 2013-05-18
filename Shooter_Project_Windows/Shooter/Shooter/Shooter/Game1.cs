@@ -444,7 +444,7 @@ namespace Shooter
                         // Play the explosion sound
                         explosionSound.Play();
 
-                        score += (enemies[i].Value)*1232/1000;
+                        score += (enemies[i].Value);
 
                     }
 
@@ -508,9 +508,18 @@ namespace Shooter
 
         private void AddMissile(Vector2 position)
         {
-            Missile missile = new Missile();
-            missile.Initialize(GraphicsDevice.Viewport, projectileTexture, position);
-            missiles.Add(missile);
+
+            if (currentKeyboardState.IsKeyDown(Keys.Space) ||
+            GamePad.GetState(PlayerIndex.One).Buttons.RightShoulder == ButtonState.Pressed)
+            {
+                if (missileCount > 0)
+                {
+                    Missile missile = new Missile();
+                    missile.Initialize(GraphicsDevice.Viewport, missileTexture, position);
+                    missiles.Add(missile);
+                    missileCount--;
+                }
+            }
         }
 
         //==============================================================================================================================
