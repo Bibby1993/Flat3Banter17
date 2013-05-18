@@ -39,6 +39,7 @@ namespace Shooter
         Texture2D mainMenu;
         Texture2D endMenu;
         Texture2D projectileTexture;
+        Texture2D missileTexture;
         Texture2D enemyTexture, heavyEnemyTexture;
         Texture2D explosionTexture;
 
@@ -51,6 +52,7 @@ namespace Shooter
         List<HeavyEnemy> heavyEnemies;
         List<Animation> explosions;
         List<Projectile> projectiles;
+        List<Missile> missiles;
 
         // The rate at which the enemies appear
         TimeSpan enemySpawnTime;
@@ -96,6 +98,8 @@ namespace Shooter
             missileCount = 3;
 
             projectiles = new List<Projectile>();
+
+            missiles = new List<Missile>();
 
             // Set the laser to fire every quarter second
             fireTime = TimeSpan.FromSeconds(.15f);
@@ -159,6 +163,8 @@ namespace Shooter
             heavyEnemyTexture = Content.Load<Texture2D>("mineHeavyAnimation");
 
             projectileTexture = Content.Load<Texture2D>("laser");
+
+            missileTexture = Content.Load<Texture2D>("rocket");
 
             explosionTexture = Content.Load<Texture2D>("explosion");
 
@@ -241,6 +247,9 @@ namespace Shooter
 
                 // Update the projectiles
                 UpdateProjectiles();
+
+                // Update the missiles
+                UpdateMissiles();
 
                 // Update the explosions
                 UpdateExplosions(gameTime);
@@ -611,6 +620,15 @@ namespace Shooter
 
         //==============================================================================================================================
 
+        private void AddMissile(Vector2 position)
+        {
+            Missile missile = new Missile();
+            missile.Initialize(GraphicsDevice.Viewport, projectileTexture, position);
+            missiles.Add(missile);
+        }
+
+        //==============================================================================================================================
+
         private void UpdateProjectiles()
         {
             // Update the Projectiles
@@ -625,6 +643,21 @@ namespace Shooter
             }
         }
 
+        //==============================================================================================================================
+
+        private void UpdateMissiles()
+        {
+            // Update the Missiles
+            for (int i = missiles.Count - 1; i >= 0; i--)
+            {
+                missiles[i].Update();
+
+                if (missiles[i].missileActive == false)
+                {
+                    missiles.RemoveAt(i);
+                }
+            }
+        }
         //==============================================================================================================================
 
         private void AddExplosion(Vector2 position)
