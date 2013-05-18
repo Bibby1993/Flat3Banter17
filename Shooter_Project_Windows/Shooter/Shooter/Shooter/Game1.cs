@@ -18,7 +18,8 @@ namespace Shooter
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        enum gameState {startScreen, playing, endScreen, bibby};
+        enum gameState {startScreen, playing, endScreen};
+        gameState state;
         // Represents the player 
         Player player;
 
@@ -96,7 +97,7 @@ namespace Shooter
 
 
             explosions = new List<Animation>();
-
+            state = gameState.startScreen;
             //Set player's score to zero
             score = 0;
 
@@ -193,14 +194,14 @@ namespace Shooter
 
         protected override void Update(GameTime gameTime)
         {
-            if (Playing == false)
+            if (state == gameState.startScreen)
             {
                 currentKeyboardState = Keyboard.GetState();
 
                 if (currentKeyboardState.IsKeyDown(Keys.Enter))
                 {
 
-                    Playing = true;
+                    state=gameState.playing;
                 }
             }
             else
@@ -245,7 +246,7 @@ namespace Shooter
 
         protected override void Draw(GameTime gameTime)
         {
-            if (Playing == false)
+            if (state == gameState.startScreen)
             {
                 spriteBatch.Begin();
                 spriteBatch.Draw(mainMenu, Vector2.Zero, Color.White);
@@ -253,7 +254,7 @@ namespace Shooter
                 spriteBatch.DrawString(font, "Press enter to start", new Vector2((GraphicsDevice.Viewport.Width+23)/3, GraphicsDevice.Viewport.Height-280), Color.DarkGoldenrod);
                 spriteBatch.End();
             }
-            else
+            else if (state==gameState.playing)
             {
 
                 GraphicsDevice.Clear(Color.CornflowerBlue);
@@ -296,7 +297,7 @@ namespace Shooter
                     explosions[i].Draw(spriteBatch);
                 }
 
-                if (Playing == false)
+                if (state == gameState.endScreen)
                 {
                     spriteBatch.Begin();
                     spriteBatch.Draw(endMenu, Vector2.Zero, Color.White);
