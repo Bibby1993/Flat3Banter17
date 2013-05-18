@@ -59,7 +59,7 @@ namespace Shooter
             Damage = 10;
 
             // Set how fast the enemy moves
-            enemyMoveSpeed = 16f;
+            enemyMoveSpeed = 6f;
 
 
             // Set the score value of the enemy

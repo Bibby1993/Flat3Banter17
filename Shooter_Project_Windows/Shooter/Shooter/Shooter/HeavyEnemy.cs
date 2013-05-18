@@ -83,7 +83,7 @@ namespace Shooter
             // If the enemy is past the screen or its heavyHealth reaches 0 then deactivateit
             if (heavyPosition.X < -heavyWidth || heavyHealth <= 0)
             {
-                // By setting the heavyActive flag to false, the game will remove this objet fromthe 
+                // By setting the heavyActive flag to false, the game will remove this object from the 
                 // heavyActive game list
                 heavyActive = false;
             }
