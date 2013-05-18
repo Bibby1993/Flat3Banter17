@@ -24,7 +24,7 @@ namespace Shooter
         // Represents the player 
         Player player;
         // A movement speed for the player
-        float playerMoveSpeed;
+        float playerMoveSpeed, difficultyFactor;
 
         // Keyboard states used to determine key presses
         KeyboardState currentKeyboardState;
@@ -69,7 +69,7 @@ namespace Shooter
         Song gameplayMusic;
 
         //Number that holds the player score
-        int score, lastScore, missileCount, missileTimer;
+        int score, lastScore, missileCount, missileTimer, difficultyTimer;
 
         // The font used to display UI elements
         SpriteFont font;
@@ -99,6 +99,8 @@ namespace Shooter
             score = 0;
             missileCount = 3;
             missileTimer = 60;
+            difficultyTimer = 0;
+            difficultyFactor = 1.0f;
 
             projectiles = new List<Projectile>();
 
@@ -223,7 +225,11 @@ namespace Shooter
                 // Allows the game to exit
                 if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                     this.Exit();
-
+                difficultyTimer++;
+                if (difficultyTimer / 1000 == 0)
+                {
+                    difficultyFactor -= 0.1f;
+                }
                 // Save the previous state of the keyboard and game pad so we can determinesingle key/button presses
                 previousGamePadState = currentGamePadState;
                 previousKeyboardState = currentKeyboardState;
