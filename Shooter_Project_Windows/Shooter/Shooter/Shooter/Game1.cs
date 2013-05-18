@@ -299,7 +299,7 @@ namespace Shooter
                 spriteBatch.DrawString(font, "Your power on the James scale: " + score, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y), Color.White);
 
                 // Draw the player health
-                spriteBatch.DrawString(font, "Your this close to death!: " + player.Health, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y + 30), Color.White);
+                spriteBatch.DrawString(font, "You're this close to death!: " + player.Health, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y + 30), Color.White);
 
                 // Draw the Projectiles
                 for (int i = 0; i < projectiles.Count; i++)
