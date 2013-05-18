@@ -62,6 +62,7 @@ namespace Shooter
         TimeSpan fireTime;
         TimeSpan previousFireTime;
         TimeSpan fireTimex2;
+        TimeSpan fireTimex10;
         
         // The sound that is played when a laser is fired
         SoundEffect laserSound;
@@ -111,6 +112,9 @@ namespace Shooter
 
             //Set the laser to fire twice as fast
             fireTimex2 = TimeSpan.FromSeconds(.075f);
+
+            //Set the laser to fire stupid as fast
+            fireTimex5 = TimeSpan.FromSeconds(.015f);
 
             // Initialize the enemies list
             enemies = new List<Enemy>();
@@ -368,6 +372,12 @@ namespace Shooter
             if (player.Health <= 20)
             {
                 fireTime = fireTimex2;
+            }
+
+            //Last resort, stupid fire rate
+            if (player.Health <= 5)
+            {
+                fireTime = fireTimex10;
             }
 
             // reset score if player health goes to zero

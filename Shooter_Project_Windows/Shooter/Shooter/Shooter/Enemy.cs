@@ -56,7 +56,7 @@ namespace Shooter
             Health = 5;
 
             // Set the amount of damage the enemy can do
-            Damage = 10;
+            Damage = 5;
 
             // Set how fast the enemy moves
             enemyMoveSpeed = 6f;

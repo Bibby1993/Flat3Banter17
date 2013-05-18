@@ -7,6 +7,8 @@ namespace Shooter
 {
     class HeavyEnemy
     {
+        //integers
+        int i;
 
         // Animation representing the enemy
         public Animation heavyEnemyAnimation;
@@ -64,7 +66,7 @@ namespace Shooter
 
 
             // Set the score heavyValue of the enemy
-            heavyValue = 300;
+            heavyValue = 500;
 
         }
 
@@ -92,8 +94,9 @@ namespace Shooter
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            // Draw the animation
-            heavyEnemyAnimation.Draw(spriteBatch);
+
+                // Draw the animation
+                heavyEnemyAnimation.Draw(spriteBatch);
         }
 
 
