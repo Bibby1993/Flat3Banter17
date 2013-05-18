@@ -205,8 +205,8 @@ namespace Shooter
             if (state == gameState.startScreen)
             {
                 currentKeyboardState = Keyboard.GetState();
-
-                if (currentKeyboardState.IsKeyDown(Keys.Enter))
+                currentGamePadState = GamePad.GetState(PlayerIndex.One);
+                if (currentKeyboardState.IsKeyDown(Keys.Enter)|| currentGamePadState.Buttons.A == ButtonState.Pressed)
                 {
 
                     state=gameState.playing;
@@ -262,7 +262,7 @@ namespace Shooter
                 spriteBatch.Begin();
                 spriteBatch.Draw(mainMenu, Vector2.Zero, Color.White);
                 spriteBatch.DrawString(font, "Last score: " + lastScore, new Vector2((GraphicsDevice.Viewport.Width+23)/3, GraphicsDevice.Viewport.Height-250), Color.PeachPuff);
-                spriteBatch.DrawString(font, "Press enter to start", new Vector2((GraphicsDevice.Viewport.Width+23)/3, GraphicsDevice.Viewport.Height-280), Color.DarkGoldenrod);
+                spriteBatch.DrawString(font, "Press enter or A on gamepad to start", new Vector2((GraphicsDevice.Viewport.Width+23)/3, GraphicsDevice.Viewport.Height-280), Color.DarkGoldenrod);
                 spriteBatch.End();
             }
             else if (state==gameState.playing)
