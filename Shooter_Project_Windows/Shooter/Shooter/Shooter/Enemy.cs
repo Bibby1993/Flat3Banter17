@@ -8,7 +8,7 @@ namespace Shooter
     {
 
         // Animation representing the enemy
-        private Animation EnemyAnimation;
+        public Animation EnemyAnimation;
 
         // The position of the enemy ship relative to the top left corner of thescreen
         public Vector2 Position;
