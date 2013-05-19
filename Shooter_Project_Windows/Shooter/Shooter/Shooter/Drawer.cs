@@ -13,8 +13,8 @@ namespace Shooter
 {
     class Drawer
     {
-        List<Enemy> enemies;
-        List<HeavyEnemy> heavyEnemies;
+        List<EnemyObject> enemies;
+        List<HeavyEnemyObject> heavyEnemies;
         SpriteBatch spriteBatch;
         List<Projectile> projectiles;
         List<Missile> missiles;
@@ -25,7 +25,7 @@ namespace Shooter
         ParallaxingBackground bgLayer2;
 
 
-        public void UpdateVariables(List<Enemy> enemies, List<HeavyEnemy> heavyEnemies, List<Projectile> projectiles,
+        public void UpdateVariables(List<EnemyObject> enemies, List<HeavyEnemyObject> heavyEnemies, List<Projectile> projectiles,
             List<Animation> explosions, SpriteBatch spriteBatch, Player player, Texture2D mainBackground,
             ParallaxingBackground bgLayer1, ParallaxingBackground bgLayer2, List<Missile> missiles)
         {

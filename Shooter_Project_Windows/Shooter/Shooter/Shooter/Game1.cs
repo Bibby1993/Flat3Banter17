@@ -48,8 +48,8 @@ namespace Shooter
         ParallaxingBackground bgLayer2;
 
         // Enemies
-        List<Enemy> enemies;
-        List<HeavyEnemy> heavyEnemies;
+        List<EnemyObject> enemies;
+        List<HeavyEnemyObject> heavyEnemies;
         List<Animation> explosions;
         List<Projectile> projectiles;
         List<Missile> missiles;
@@ -119,10 +119,10 @@ namespace Shooter
             fireTimex5 = TimeSpan.FromSeconds(.03f);
 
             // Initialize the enemies list
-            enemies = new List<Enemy>();
+            enemies = new List<EnemyObject>();
 
             // Initialize the heavyEnemies list
-            heavyEnemies = new List<HeavyEnemy>();
+            heavyEnemies = new List<HeavyEnemyObject>();
 
             // Set the time keepers to zero
             previousSpawnTime = TimeSpan.Zero;
@@ -413,7 +413,7 @@ namespace Shooter
             Vector2 position = new Vector2(GraphicsDevice.Viewport.Width + enemyTexture.Width / 2, random.Next(100, GraphicsDevice.Viewport.Height - 100));
 
             // Create an enemy
-            Enemy enemy = new Enemy();
+            EnemyObject enemy = new EnemyObject();
 
             // Initialize the enemy
             enemy.Initialize(enemyAnimation, position, difficultyFactor);
@@ -436,7 +436,7 @@ namespace Shooter
             Vector2 position = new Vector2(GraphicsDevice.Viewport.Width + heavyEnemyTexture.Width / 2, random.Next(100, GraphicsDevice.Viewport.Height - 100));
 
             // Create an enemy
-            HeavyEnemy heavyEnemy = new HeavyEnemy();
+            HeavyEnemyObject heavyEnemy = new HeavyEnemyObject();
 
             // Initialize the enemy
             heavyEnemy.Initialize(heavyEnemyAnimation, position, difficultyFactor);

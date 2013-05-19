@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Shooter
 {
-    class HeavyEnemy
+    class HeavyEnemyObject
     {
         // Animation representing the enemy
         public Animation heavyEnemyAnimation;

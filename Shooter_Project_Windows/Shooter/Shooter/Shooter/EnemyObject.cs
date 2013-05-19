@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Shooter
 {
-    abstract class IEnemy
+    class EnemyObject
     {
-           // Animation representing the enemy
-        Animation EnemyAnimation;
+
+        // Animation representing the enemy
+        private Animation EnemyAnimation;
 
         // The position of the enemy ship relative to the top left corner of thescreen
         public Vector2 Position;
@@ -42,7 +40,7 @@ namespace Shooter
         // The speed at which the enemy moves
         float enemyMoveSpeed;
 
-        void Initialize(Animation animation, Vector2 position, float df)
+        public void Initialize(Animation animation, Vector2 position, float df)
         {
             // Load the enemy ship texture
             EnemyAnimation = animation;

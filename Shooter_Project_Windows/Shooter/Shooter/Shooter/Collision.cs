@@ -14,13 +14,13 @@ namespace Shooter
     class Collision
     {
         Player player;
-        List<Enemy> enemies;
-        List<HeavyEnemy> heavyEnemies;
+        List<EnemyObject> enemies;
+        List<HeavyEnemyObject> heavyEnemies;
         List<Projectile> projectiles;
         List<Missile> missiles;
         Rectangle r1, r2, r3;
 
-        public void UpdateVariables(List<Enemy> enemies, List<HeavyEnemy> heavyEnemies, List<Projectile> projectiles,
+        public void UpdateVariables(List<EnemyObject> enemies, List<HeavyEnemyObject> heavyEnemies, List<Projectile> projectiles,
             Player player, List<Missile> missiles)
         {
             this.enemies = enemies;
