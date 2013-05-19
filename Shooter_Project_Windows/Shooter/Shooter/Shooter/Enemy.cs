@@ -72,7 +72,7 @@ namespace Shooter
         {
             // The enemy always moves to the left so decrement it's xposition
             Position.X -= enemyMoveSpeed;
-
+            
             // Update the position of the Animation
             EnemyAnimation.Position = Position;
 

@@ -170,8 +170,8 @@ namespace Shooter
             bgLayer1.Initialize(Content, "bglayer1", GraphicsDevice.Viewport.Width, -1);
             bgLayer2.Initialize(Content, "bglayer2", GraphicsDevice.Viewport.Width, -2);
 
-            enemyTexture = Content.Load<Texture2D>("mineAnimation");
-            heavyEnemyTexture = Content.Load<Texture2D>("mineAnimation");
+            enemyTexture = Content.Load<Texture2D>("smallShip");
+            heavyEnemyTexture = Content.Load<Texture2D>("bigShip");
 
             projectileTexture = Content.Load<Texture2D>("laser");
 
@@ -407,7 +407,7 @@ namespace Shooter
             Animation enemyAnimation = new Animation();
 
             // Initialize the animation with the correct animation information
-            enemyAnimation.Initialize(enemyTexture, Vector2.Zero, 47, 61, 8, 30, Color.White, 1f, true);
+            enemyAnimation.Initialize(enemyTexture, Vector2.Zero, enemyTexture.Width, enemyTexture.Height, 1, 30, Color.White, 1f, true);
 
             // Randomly generate the position of the enemy
             Vector2 position = new Vector2(GraphicsDevice.Viewport.Width + enemyTexture.Width / 2, random.Next(100, GraphicsDevice.Viewport.Height - 100));
@@ -430,7 +430,7 @@ namespace Shooter
             Animation heavyEnemyAnimation = new Animation();
 
             // Initialize the animation with the correct animation information
-            heavyEnemyAnimation.Initialize(heavyEnemyTexture, Vector2.Zero, 47, 61, 8, 30, Color.White, 1f, true);
+            heavyEnemyAnimation.Initialize(heavyEnemyTexture, Vector2.Zero, heavyEnemyTexture.Width, heavyEnemyTexture.Height, 1, 30, Color.White, 1f, true);
 
             // Randomly generate the position of the enemy
             Vector2 position = new Vector2(GraphicsDevice.Viewport.Width + heavyEnemyTexture.Width / 2, random.Next(100, GraphicsDevice.Viewport.Height - 100));
