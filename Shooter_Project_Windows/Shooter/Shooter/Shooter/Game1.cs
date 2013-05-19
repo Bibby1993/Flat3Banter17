@@ -171,7 +171,7 @@ namespace Shooter
             bgLayer2.Initialize(Content, "bglayer2", GraphicsDevice.Viewport.Width, -2);
 
             enemyTexture = Content.Load<Texture2D>("mineAnimation");
-            heavyEnemyTexture = Content.Load<Texture2D>("mineHeavyAnimation");
+            heavyEnemyTexture = Content.Load<Texture2D>("mineAnimation");
 
             projectileTexture = Content.Load<Texture2D>("laser");
 

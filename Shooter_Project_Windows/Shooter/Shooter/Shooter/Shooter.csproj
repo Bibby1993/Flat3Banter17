@@ -113,6 +113,7 @@
     <Compile Include="Drawer.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="HeavyEnemy.cs" />
+    <Compile Include="HighScore.cs" />
     <Compile Include="Missile.cs" />
     <Compile Include="ParallaxingBackground.cs" />
     <Compile Include="Player.cs" />
@@ -124,6 +125,7 @@
   <ItemGroup>
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
+    <Content Include="highScore.txt" />
     <Content Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup>
