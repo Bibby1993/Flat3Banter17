@@ -88,10 +88,10 @@ namespace Shooter
             }
             for (int i = 0; i < heavyEnemies.Count; i++)
             {
-                r2= new Rectangle((int)heavyEnemies[i].heavyPosition.X,
-                (int)heavyEnemies[i].heavyPosition.Y - heavyEnemies[i].heavyWidth / 2,
-                heavyEnemies[i].heavyWidth,
-                heavyEnemies[i].heavyHeight);
+                r2= new Rectangle((int)heavyEnemies[i].Position.X,
+                (int)heavyEnemies[i].Position.Y - heavyEnemies[i].Width / 2,
+                heavyEnemies[i].Width,
+                heavyEnemies[i].Height);
 
                 // Determine if the two objects collided with each
                 // other
@@ -99,11 +99,11 @@ namespace Shooter
                 {
                     // Subtract the health from the player based on
                     // the enemy damage
-                    player.Health -= (int)heavyEnemies[i].heavyDamage;
+                    player.Health -= (int)heavyEnemies[i].Damage;
 
                     // Since the enemy collided with the player
                     // destroy it
-                    heavyEnemies[i].heavyHealth = 0;
+                    heavyEnemies[i].Health = 0;
 
                     // If the player health is less than zero we died
                     if (player.Health <= 0)
@@ -117,7 +117,7 @@ namespace Shooter
 
                     if (r3.Intersects(r2))
                     {
-                        heavyEnemies[i].heavyHealth -= projectiles[k].Damage;
+                        heavyEnemies[i].Health -= projectiles[k].Damage;
                         projectiles[k].Active = false;
                     }
                 }
@@ -129,7 +129,7 @@ namespace Shooter
 
                     if (r3.Intersects(r2))
                     {
-                        heavyEnemies[i].heavyHealth -= missiles[k].missileDamage;
+                        heavyEnemies[i].Health -= missiles[k].missileDamage;
                         missiles[k].missileActive = false;
                     }
                 }
