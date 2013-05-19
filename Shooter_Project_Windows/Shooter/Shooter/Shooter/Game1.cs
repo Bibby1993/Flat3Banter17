@@ -504,19 +504,19 @@ namespace Shooter
             {
                 heavyEnemies[i].Update(gameTime);
 
-                if (heavyEnemies[i].Active == false)
+                if (heavyEnemies[i].heavyActive == false)
                 {
 
                     // If not active and health <= 0
-                    if (heavyEnemies[i].Health <= 0)
+                    if (heavyEnemies[i].heavyHealth <= 0)
                     {
                         // Add an explosion
-                        AddExplosion(heavyEnemies[i].Position);
+                        AddExplosion(heavyEnemies[i].heavyPosition);
 
                         // Play the explosion sound
                         explosionSound2.Play();
 
-                        score += ((int)heavyEnemies[i].Value) ;
+                        score += ((int)heavyEnemies[i].heavyValue) ;
 
                     }
 

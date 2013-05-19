@@ -52,16 +52,16 @@ namespace Shooter
 
         private void DrawAllEnemies()
         {
-            // Draw the Heavy Enemies
-            for (int i = 0; i < heavyEnemies.Count; i++)
-            {
-                heavyEnemies[i].Draw(spriteBatch);
-            }
-
             // Draw the Enemies
             for (int i = 0; i < enemies.Count; i++)
             {
                 enemies[i].Draw(spriteBatch);
+            }
+
+            // Draw the Heavy Enemies
+            for (int i = 0; i < heavyEnemies.Count; i++)
+            {
+                heavyEnemies[i].Draw(spriteBatch);
             }
         }
 
