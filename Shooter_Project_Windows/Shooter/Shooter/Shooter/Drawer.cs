@@ -15,6 +15,7 @@ namespace Shooter
     {
         List<Enemy> enemies;
         List<HeavyEnemy> heavyEnemies;
+        List<Diagonal> diagonals;
         SpriteBatch spriteBatch;
         List<Laser> projectiles;
         List<Missile> missiles;
@@ -25,12 +26,13 @@ namespace Shooter
         ParallaxingBackground bgLayer2;
 
 
-        public void UpdateVariables(List<Enemy> enemies, List<HeavyEnemy> heavyEnemies, List<Laser> projectiles,
+        public void UpdateVariables(List<Enemy> enemies, List<HeavyEnemy> heavyEnemies, List<Diagonal> diagonals, List<Laser> projectiles,
             List<Animation> explosions, SpriteBatch spriteBatch, Player player, Texture2D mainBackground,
             ParallaxingBackground bgLayer1, ParallaxingBackground bgLayer2, List<Missile> missiles)
         {
             this.enemies = enemies;
             this.heavyEnemies = heavyEnemies;
+            this.diagonals = diagonals;
             this.spriteBatch = spriteBatch;
             this.projectiles = projectiles;
             this.explosions = explosions;
@@ -63,6 +65,12 @@ namespace Shooter
             {
                 enemies[i].Draw(spriteBatch);
             }
+
+            for (int i = 0; i < diagonals.Count; i++)
+            {
+                diagonals[i].Draw(spriteBatch);
+            }
+
         }
 
         private void DrawPlayerAndProjectiles()

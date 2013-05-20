@@ -40,7 +40,7 @@ namespace Shooter
         Texture2D endMenu;
         Texture2D projectileTexture;
         Texture2D missileTexture;
-        Texture2D enemyTexture, heavyEnemyTexture;
+        Texture2D enemyTexture, heavyEnemyTexture, diagonalTexture;
         Texture2D explosionTexture;
 
         // Parallaxing Layers
@@ -50,6 +50,7 @@ namespace Shooter
         // Enemies
         List<Enemy> enemies;
         List<HeavyEnemy> heavyEnemies;
+        List<Diagonal> diagonals;
         List<Animation> explosions;
         List<Laser> projectiles;
         List<Missile> missiles;
@@ -94,6 +95,7 @@ namespace Shooter
         {
   
             explosions = new List<Animation>();
+            diagonals = new List<Diagonal>();
             state = gameState.startScreen;
             drawer = new Drawer();
             collision = new Collision();
@@ -172,6 +174,7 @@ namespace Shooter
 
             enemyTexture = Content.Load<Texture2D>("smallShip");
             heavyEnemyTexture = Content.Load<Texture2D>("bigShip");
+            diagonalTexture = Content.Load<Texture2D>("diagonal");
 
             projectileTexture = Content.Load<Texture2D>("laser");
 
@@ -261,8 +264,10 @@ namespace Shooter
                 // Update the Heavy enemies
                 UpdateHeavyEnemies(gameTime);
 
+                UpdateDiagonals(gameTime);
+
                 // Update the collision
-                collision.UpdateVariables(enemies, heavyEnemies, projectiles, player, missiles);
+                collision.UpdateVariables(enemies, heavyEnemies,diagonals, projectiles, player, missiles);
                 collision.collision();
 
                 // Update the projectiles
@@ -295,7 +300,7 @@ namespace Shooter
             else if (state==gameState.playing)
             {
                 GraphicsDevice.Clear(Color.CornflowerBlue);
-                drawer.UpdateVariables(enemies, heavyEnemies, projectiles, explosions,
+                drawer.UpdateVariables(enemies, heavyEnemies, diagonals, projectiles, explosions,
                     spriteBatch, player, mainBackground, bgLayer1, bgLayer2, missiles);
                 // Start drawing
                 drawer.DrawAll();
@@ -438,6 +443,27 @@ namespace Shooter
             // Add the heavyEnemy to the active enemies list
             heavyEnemies.Add(heavyEnemy);
         }
+
+        private void AddDiagonal()
+        {
+            // Create the animation object
+            Animation DiagonalAnimation = new Animation();
+
+            // Initialize the animation with the correct animation information
+            DiagonalAnimation.Initialize(diagonalTexture, Vector2.Zero, diagonalTexture.Width, diagonalTexture.Height, 1, 30, Color.White, 1f, true);
+
+            // Randomly generate the position of the enemy
+            Vector2 position = new Vector2(GraphicsDevice.Viewport.Width + diagonalTexture.Width / 2, random.Next(100, GraphicsDevice.Viewport.Height - 100));
+
+            // Create an enemy
+            Diagonal diagonal = new Diagonal();
+
+            // Initialize the enemy
+            diagonal.Initialize(DiagonalAnimation, position, difficultyFactor);
+
+            // Add the heavyEnemy to the active enemies list
+            diagonals.Add(diagonal);
+        }
         //==============================================================================================================================
 
         private void UpdateEnemies(GameTime gameTime)
@@ -519,6 +545,49 @@ namespace Shooter
             }
         }
 
+        private void UpdateDiagonals(GameTime gameTime)
+        {
+            {
+                // Spawn a new enemy enemy every 1.5 seconds
+                /* if (gameTime.TotalGameTime - previousheavyEnemySpawnTime > heavyEnemySpawnTime)
+                 {
+                     previousheavyEnemySpawnTime = gameTime.TotalGameTime;
+
+                     // Add an Heavy Enemy
+                     AddHeavyEnemy();
+                 }
+                 */
+
+                if (diagonals.Count <= 0)
+                    AddDiagonal();
+                // Update the Heavy Enemies
+                for (int i = diagonals.Count - 1; i >= 0; i--)
+                {
+                    diagonals[i].Update(gameTime);
+                   // diagonals[i].changeDirection();
+
+
+                    if (diagonals[i].Active == false)
+                    {
+
+                        // If not active and health <= 0
+                        if (diagonals[i].Health <= 0)
+                        {
+                            // Add an explosion
+                            AddExplosion(diagonals[i].Position);
+
+                            // Play the explosion sound
+                            explosionSound2.Play();
+
+                            score += ((int)diagonals[i].Value);
+
+                        }
+
+                        diagonals.RemoveAt(i);
+                    }
+                }
+            }
+        }
         //==============================================================================================================================
 
         private void AddProjectile(Vector2 position)

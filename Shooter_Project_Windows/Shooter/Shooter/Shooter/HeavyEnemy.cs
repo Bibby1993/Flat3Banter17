@@ -29,7 +29,7 @@ namespace Shooter
             Damage = 30 * df;
 
             // Set how fast the enemy moves
-            enemyMoveSpeed = 1f * df;
+            enemyMoveSpeedX = 1f * df;
 
 
             // Set the score value of the enemy

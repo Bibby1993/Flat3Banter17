@@ -18,9 +18,10 @@ namespace Shooter
         List<HeavyEnemy> heavyEnemies;
         List<Laser> projectiles;
         List<Missile> missiles;
+        List<Diagonal> diagonals;
         Rectangle r1, r2, r3;
 
-        public void UpdateVariables(List<Enemy> enemies, List<HeavyEnemy> heavyEnemies, List<Laser> projectiles,
+        public void UpdateVariables(List<Enemy> enemies, List<HeavyEnemy> heavyEnemies, List<Diagonal> diagonals, List<Laser> projectiles,
             Player player, List<Missile> missiles)
         {
             this.enemies = enemies;
@@ -28,6 +29,7 @@ namespace Shooter
             this.projectiles = projectiles;
             this.player = player;
             this.missiles = missiles;
+            this.diagonals = diagonals;
         }
 
         public void collision()

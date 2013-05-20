@@ -123,6 +123,7 @@
   <ItemGroup>
     <Compile Include="Animation.cs" />
     <Compile Include="Collision.cs" />
+    <Compile Include="Diagonal.cs" />
     <Compile Include="Drawer.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="HeavyEnemy.cs" />

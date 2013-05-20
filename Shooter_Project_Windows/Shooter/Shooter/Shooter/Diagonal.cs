@@ -1,12 +1,15 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace Shooter
 {
-    class Enemy :IEnemy
+    class Diagonal : IEnemy
     {
-        override public void Initialize(Animation animation, Vector2 position, float df)
+        public override void Initialize(Animation animation, Vector2 position, float df)
         {
             // Load the enemy ship texture
             EnemyAnimation = animation;
@@ -25,12 +28,18 @@ namespace Shooter
             Damage = 5 * df;
 
             // Set how fast the enemy moves
-            enemyMoveSpeedX = 6f * df;
+            enemyMoveSpeedX = 1f * df;
 
 
             // Set the score value of the enemy
-            Value = 100 * df;
+            Value = 500 * df;
 
+        }
+
+        public void changeDirection() {
+            Random random = new Random();
+            if (random.Next(100) >= 95)
+            { enemyMoveSpeedY = -enemyMoveSpeedY; }
         }
     }
 }

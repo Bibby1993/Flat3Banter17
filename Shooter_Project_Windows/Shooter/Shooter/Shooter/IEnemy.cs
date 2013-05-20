@@ -38,7 +38,8 @@ namespace Shooter
         }
 
         // The speed at which the enemy moves
-        public float enemyMoveSpeed;
+        public float enemyMoveSpeedX;
+        public float enemyMoveSpeedY;
 
         
         public abstract void Initialize(Animation animation, Vector2 position, float df);
@@ -47,7 +48,8 @@ namespace Shooter
         public void Update(GameTime gameTime)
         {
             // The enemy always moves to the left so decrement it's xposition
-            Position.X -= enemyMoveSpeed;
+            Position.X -= enemyMoveSpeedX;
+            Position.Y -= enemyMoveSpeedY;
 
             // Update the position of the Animation
             EnemyAnimation.Position = Position;
