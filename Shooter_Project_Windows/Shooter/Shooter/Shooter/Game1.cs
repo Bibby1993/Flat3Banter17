@@ -185,6 +185,7 @@ namespace Shooter
             // Load the music
             gameplayMusic = Content.Load<Song>("sound/gameMusic");
             cryingSound = Content.Load<Song>("sound/crying_loud_male");
+            
 
             // Load the laser and explosion sound effect
             laserSound = Content.Load<SoundEffect>("sound/laserFire");
@@ -564,7 +565,7 @@ namespace Shooter
                 for (int i = diagonals.Count - 1; i >= 0; i--)
                 {
                     diagonals[i].Update(gameTime);
-                   // diagonals[i].changeDirection();
+                    // diagonals[i].changeDirection();
 
 
                     if (diagonals[i].Active == false)
@@ -588,7 +589,6 @@ namespace Shooter
                 }
             }
         }
-        //==============================================================================================================================
 
         private void AddProjectile(Vector2 position)
         {

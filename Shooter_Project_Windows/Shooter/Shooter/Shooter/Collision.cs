@@ -16,9 +16,9 @@ namespace Shooter
         Player player;
         List<Enemy> enemies;
         List<HeavyEnemy> heavyEnemies;
+        List<Diagonal> diagonals;
         List<Laser> projectiles;
         List<Missile> missiles;
-        List<Diagonal> diagonals;
         Rectangle r1, r2, r3;
 
         public void UpdateVariables(List<Enemy> enemies, List<HeavyEnemy> heavyEnemies, List<Diagonal> diagonals, List<Laser> projectiles,
@@ -38,6 +38,7 @@ namespace Shooter
             (int)player.Position.Y,
             player.Width,
             player.Height);
+
 
             for (int i = 0; i < enemies.Count; i++)
             {
@@ -88,6 +89,8 @@ namespace Shooter
                 }
 
             }
+
+
             for (int i = 0; i < heavyEnemies.Count; i++)
             {
                 r2= new Rectangle((int)heavyEnemies[i].Position.X,
