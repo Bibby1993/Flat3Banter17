@@ -379,12 +379,6 @@ namespace Shooter
                 fireTime = fireTimex2;
             }
 
-            //Last resort, stupid fire rate
-            if (player.Health <= 5)
-            {
-                fireTime = fireTimex5;
-            }
-
             // reset score if player health goes to zero
             if (player.Health <= 0)
             {
