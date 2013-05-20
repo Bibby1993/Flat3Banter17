@@ -294,6 +294,7 @@ namespace Shooter
             }
             else if (state==gameState.playing)
             {
+                Color color;
 
                 GraphicsDevice.Clear(Color.CornflowerBlue);
                 drawer.UpdateVariables(enemies, heavyEnemies, projectiles, explosions,
@@ -307,7 +308,8 @@ namespace Shooter
 
 
                 // Draw the player health
-                spriteBatch.DrawString(font, "Health: " + player.Health, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y + 30), Color.White);
+
+                spriteBatch.DrawString(font, "Health: " + player.Health, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y + 30), healthColor(player.Health));
 
                   if (state == gameState.endScreen)
                 {
@@ -324,6 +326,18 @@ namespace Shooter
         }
 
         //===================================================================================================================================
+       
+        private Color healthColor(int health) {
+            if (player.Health <= 50 && player.Health > 25)
+            {
+                return Color.Yellow;
+            }
+            else if (player.Health <= 25)
+            {
+                return Color.Red;
+            }
+            else return Color.Green;
+        }
 
         private void UpdatePlayer(GameTime gameTime)
         {
