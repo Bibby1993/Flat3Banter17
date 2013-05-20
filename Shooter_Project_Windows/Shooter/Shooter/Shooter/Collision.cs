@@ -112,6 +112,8 @@ namespace Shooter
                     // If the player health is less than zero we died
                     if (player.Health <= 0)
                         player.Active = false;
+
+
                 }
                 for (int k = 0; k < projectiles.Count; k++)
                 {

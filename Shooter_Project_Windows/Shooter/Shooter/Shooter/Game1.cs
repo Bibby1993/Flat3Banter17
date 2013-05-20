@@ -60,10 +60,7 @@ namespace Shooter
         TimeSpan previousSpawnTime;
         TimeSpan heavyEnemySpawnTime;
         TimeSpan previousheavyEnemySpawnTime;
-        TimeSpan fireTime;
-        TimeSpan previousFireTime;
-        TimeSpan fireTimex2;
-        TimeSpan fireTimex5;
+        TimeSpan previousFireTime, fireTime, fireTimex2, fireTimex5;
         TimeSpan transportHealTime, previousTransportHealTime;
         TimeSpan waveTime, previousWaveTime;
         
@@ -382,13 +379,13 @@ namespace Shooter
 
 
             //Last resort, double fiire rate
-            if (player.Health <= 20)
+            if (player.Health <= 10)
             {
                 fireTime = fireTimex2;
             }
 
             // reset score if player health goes to zero
-            if (player.Health <= 0)
+            if (player.Health <= 0 || transportShipHealth <= 0)
             {
                 lastScore = score;
 
@@ -396,7 +393,9 @@ namespace Shooter
                 CryingSound(cryingSound);
                 score = 0;
                 player.Health = 100;
+                transportShipHealth = 300;
                 state = gameState.startScreen;
+                Reset();
             }
 
         }
@@ -503,7 +502,7 @@ namespace Shooter
                         score += ((int)enemies[i].Value);
 
                     }
-                    else transportShipHealth -= (int)enemies[i].Health;
+                    else transportShipHealth -= ((int)enemies[i].Health)*3;
 
                     enemies.RemoveAt(i);
                 }
@@ -715,8 +714,6 @@ namespace Shooter
                 if(transportShipHealth<300)
                 transportShipHealth++;
             }
-            if (transportShipHealth <= 0)
-                state = gameState.startScreen;
         }
         private void CheckforSecond()
         {
@@ -738,6 +735,39 @@ namespace Shooter
                     }
                 }
             }
+        }
+
+        private void Reset()
+        {
+
+
+            explosions.Clear();
+
+            diagonals.Clear();
+
+            drawer = new Drawer();
+
+            collision = new Collision();
+
+            //Set player's score to zero
+            missileCount = 3;
+            secondTimer = 60;
+            difficultyFactor = 1.0f;
+
+            projectiles.Clear();
+
+            missiles.Clear();
+
+            // Initialize the enemies list
+            enemies.Clear();
+
+
+            // Initialize the heavyEnemies list
+            heavyEnemies.Clear();
+
+            //Reset fire time
+            fireTime = TimeSpan.FromSeconds(.15f);
+
         }
 
     }
