@@ -28,7 +28,8 @@ namespace Shooter
             Damage = 5 * df;
 
             // Set how fast the enemy moves
-            enemyMoveSpeedX = 1f * df;
+            enemyMoveSpeedX = 2f * df;
+            enemyMoveSpeedY = 3f*df;
 
 
             // Set the score value of the enemy
@@ -36,10 +37,18 @@ namespace Shooter
 
         }
 
-        public void changeDirection() {
+        public void changeDirection(GraphicsDevice gd) {
             Random random = new Random();
-            if (random.Next(100) >= 95)
-            { enemyMoveSpeedY = -enemyMoveSpeedY; }
+            if (random.Next(300) >= 295)
+             enemyMoveSpeedY = -enemyMoveSpeedY;
+            if (Position.Y>=gd.Viewport.Height)
+            {
+                enemyMoveSpeedY = ((float)Math.Sqrt(enemyMoveSpeedY*enemyMoveSpeedY));
+            }
+            else if (Position.Y <= 0)
+            {
+                enemyMoveSpeedY = -((float)Math.Sqrt(enemyMoveSpeedY * enemyMoveSpeedY));
+            }
         }
     }
 }

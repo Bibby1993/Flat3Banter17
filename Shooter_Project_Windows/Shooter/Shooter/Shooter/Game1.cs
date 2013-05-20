@@ -571,8 +571,7 @@ namespace Shooter
                 for (int i = diagonals.Count - 1; i >= 0; i--)
                 {
                     diagonals[i].Update(gameTime);
-                    // diagonals[i].changeDirection();
-
+                    diagonals[i].changeDirection(GraphicsDevice);
 
                     if (diagonals[i].Active == false)
                     {
