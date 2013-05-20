@@ -493,7 +493,10 @@ namespace Shooter
                         AddExplosion(enemies[i].Position);
 
                         // Play the explosion sound
-                        explosionSound.Play();
+                        SoundEffectInstance explosionSoundInstance;
+                        explosionSoundInstance = explosionSound.CreateInstance();
+                        explosionSoundInstance.Volume = 0.5f;
+                        explosionSoundInstance.Play();
 
                         score += ((int)enemies[i].Value);
 
@@ -535,7 +538,10 @@ namespace Shooter
                         AddExplosion(heavyEnemies[i].Position);
 
                         // Play the explosion sound
-                        explosionSound2.Play();
+                        SoundEffectInstance explosionSoundInstance;
+                        explosionSoundInstance = explosionSound2.CreateInstance();
+                        explosionSoundInstance.Volume = 0.5f;
+                        explosionSoundInstance.Play();
 
                         score += ((int)heavyEnemies[i].Value) ;
 
