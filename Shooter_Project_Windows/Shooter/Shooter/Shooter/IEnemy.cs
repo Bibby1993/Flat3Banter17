@@ -39,6 +39,8 @@ namespace Shooter
 
         // The speed at which the enemy moves
         public float enemyMoveSpeed;
+
+        
         public abstract void Initialize(Animation animation, Vector2 position, float df);
 
 

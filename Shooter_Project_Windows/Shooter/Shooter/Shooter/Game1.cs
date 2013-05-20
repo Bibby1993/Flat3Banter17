@@ -266,7 +266,7 @@ namespace Shooter
                 collision.collision();
 
                 // Update the projectiles
-                UpdateProjectiles();
+                UpdateProjectiles(gameTime);
 
                 // Update the missiles
                 UpdateMissiles();
@@ -359,19 +359,7 @@ namespace Shooter
             player.Position.X = MathHelper.Clamp(player.Position.X, 0, GraphicsDevice.Viewport.Width - player.Width);
             player.Position.Y = MathHelper.Clamp(player.Position.Y, 0, GraphicsDevice.Viewport.Height - player.Height);
 
-            // Fire only every interval we set as the fireTime
-            if (gameTime.TotalGameTime - previousFireTime > fireTime)
-            {
-                // Reset our current time
-                previousFireTime = gameTime.TotalGameTime;
 
-                // Add the projectile, but add it to the front and center of the player
-                AddProjectile(player.Position + new Vector2(player.Width / 2, 0));
-
-                // Play the laser sound
-                laserSound.Play();
-
-            }
 
             //Last resort, double fiire rate
             if (player.Health <= 20)
@@ -536,14 +524,27 @@ namespace Shooter
 
         //==============================================================================================================================
 
-        private void UpdateProjectiles()
+        private void UpdateProjectiles(GameTime gameTime)
         {
+            // Fire only every interval we set as the fireTime
+            if (gameTime.TotalGameTime - previousFireTime > fireTime)
+            {
+                // Reset our current time
+                previousFireTime = gameTime.TotalGameTime;
+
+                // Add the projectile, but add it to the front and center of the player
+                AddProjectile(player.Position + new Vector2(player.Width / 2, 0));
+
+                // Play the laser sound
+                laserSound.Play();
+
+            }
             // Update the Projectiles
             for (int i = projectiles.Count - 1; i >= 0; i--)
             {
                 projectiles[i].Update();
 
-                if (projectiles[i].Active == false)
+                if (projectiles[i].active == false)
                 {
                     projectiles.RemoveAt(i);
                 }
@@ -559,7 +560,7 @@ namespace Shooter
             {
                 missiles[i].Update();
 
-                if (missiles[i].missileActive == false)
+                if (missiles[i].active == false)
                 {
                     missiles.RemoveAt(i);
                 }

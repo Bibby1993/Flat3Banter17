@@ -62,26 +62,26 @@ namespace Shooter
                 }
                 for (int k = 0; k < projectiles.Count; k++)
                 {
-                    r3 = new Rectangle((int)projectiles[k].Position.X -
-                    projectiles[k].Width / 2, (int)projectiles[k].Position.Y -
-                    projectiles[k].Height / 2, projectiles[k].Width, projectiles[k].Height);
+                    r3 = new Rectangle((int)projectiles[k].position.X -
+                    projectiles[k].projectileWidth / 2, (int)projectiles[k].position.Y -
+                    projectiles[k].projectileHeight / 2, projectiles[k].projectileWidth, projectiles[k].projectileHeight);
 
                     if (r3.Intersects(r2))
                     {
-                        enemies[i].Health -= projectiles[k].Damage;
-                        projectiles[k].Active = false;
+                        enemies[i].Health -= projectiles[k].damage;
+                        projectiles[k].active = false;
                     }
                 }
                 for (int k = 0; k < missiles.Count; k++)
                 {
-                    r3 = new Rectangle((int)missiles[k].missilePosition.X -
-                    missiles[k].missileWidth / 2, (int)missiles[k].missilePosition.Y -
-                    missiles[k].missileHeight / 2, missiles[k].missileWidth, missiles[k].missileHeight);
+                    r3 = new Rectangle((int)missiles[k].position.X -
+                    missiles[k].projectileWidth / 2, (int)missiles[k].position.Y -
+                    missiles[k].projectileHeight / 2, missiles[k].projectileWidth, missiles[k].projectileHeight);
 
                     if (r3.Intersects(r2))
                     {
-                        enemies[i].Health -= missiles[k].missileDamage;
-                        missiles[k].missileActive = false;
+                        enemies[i].Health -= missiles[k].damage;
+                        missiles[k].active = false;
                     }
                 }
 
@@ -111,26 +111,26 @@ namespace Shooter
                 }
                 for (int k = 0; k < projectiles.Count; k++)
                 {
-                    r3 = new Rectangle((int)projectiles[k].Position.X -
-                    projectiles[k].Width / 2, (int)projectiles[k].Position.Y -
-                    projectiles[k].Height / 2, projectiles[k].Width, projectiles[k].Height);
+                    r3 = new Rectangle((int)projectiles[k].position.X -
+                    projectiles[k].projectileWidth / 2, (int)projectiles[k].position.Y -
+                    projectiles[k].projectileHeight / 2, projectiles[k].projectileWidth, projectiles[k].projectileHeight);
 
                     if (r3.Intersects(r2))
                     {
-                        heavyEnemies[i].Health -= projectiles[k].Damage;
-                        projectiles[k].Active = false;
+                        heavyEnemies[i].Health -= projectiles[k].damage;
+                        projectiles[k].active = false;
                     }
                 }
                 for (int k = 0; k < missiles.Count; k++)
                 {
-                    r3 = new Rectangle((int)missiles[k].missilePosition.X -
-                    missiles[k].missileWidth / 2, (int)missiles[k].missilePosition.Y -
-                    missiles[k].missileHeight / 2, missiles[k].missileWidth, missiles[k].missileHeight);
+                    r3 = new Rectangle((int)missiles[k].position.X -
+                    missiles[k].projectileWidth / 2, (int)missiles[k].position.Y -
+                    missiles[k].projectileHeight / 2, missiles[k].projectileWidth, missiles[k].projectileHeight);
 
                     if (r3.Intersects(r2))
                     {
-                        heavyEnemies[i].Health -= missiles[k].missileDamage;
-                        missiles[k].missileActive = false;
+                        heavyEnemies[i].Health -= missiles[k].damage;
+                        missiles[k].active = false;
                     }
                 }
 
