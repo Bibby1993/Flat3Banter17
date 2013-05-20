@@ -295,7 +295,7 @@ namespace Shooter
                 spriteBatch.Begin();
                 spriteBatch.Draw(mainMenu, Vector2.Zero, Color.White);
                 spriteBatch.DrawString(font, "Last score: " + lastScore, new Vector2((GraphicsDevice.Viewport.Width+127)/3, GraphicsDevice.Viewport.Height-200), Color.White);
-                spriteBatch.DrawString(font, "Press enter or A on gamepad to start", new Vector2((GraphicsDevice.Viewport.Width-310)/3, GraphicsDevice.Viewport.Height-280), Color.White);
+                spriteBatch.DrawString(font, "Press enter or A on gamepad to start", new Vector2((GraphicsDevice.Viewport.Width-310)/3, GraphicsDevice.Viewport.Height-310), Color.White);
                 spriteBatch.End();
             }
             else if (state==gameState.playing)
