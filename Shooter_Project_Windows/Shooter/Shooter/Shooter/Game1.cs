@@ -65,6 +65,7 @@ namespace Shooter
         TimeSpan fireTimex2;
         TimeSpan fireTimex5;
         TimeSpan transportHealTime, previousTransportHealTime;
+        TimeSpan waveTime, previousWaveTime;
         
         // The sound that is played when a laser is fired
         SoundEffect laserSound;
@@ -74,7 +75,7 @@ namespace Shooter
         SoundEffect explosionSound2;
 
         //Number that holds the player score
-        int score, lastScore, missileCount, secondTimer, difficultyTimer,transportShipHealth;
+        int score, lastScore, missileCount, secondTimer, transportShipHealth, waveCounter;
 
         // The font used to display UI elements
         SpriteFont font;
@@ -105,7 +106,6 @@ namespace Shooter
             score = 0;
             missileCount = 3;
             secondTimer = 60;
-            difficultyTimer = 0;
             difficultyFactor = 1.0f;
             transportShipHealth = 300;
 
@@ -240,12 +240,7 @@ namespace Shooter
                 // Allows the game to exit
                 if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                     this.Exit();
-                difficultyTimer++;
-                if (difficultyTimer / 1000 == 1)
-                {
-                    difficultyFactor += 0.1f;
-                    difficultyTimer = 0;
-                }
+                
                 // Save the previous state of the keyboard and game pad so we can determinesingle key/button presses
                 previousGamePadState = currentGamePadState;
                 previousKeyboardState = currentKeyboardState;
@@ -286,7 +281,7 @@ namespace Shooter
                 // Update the explosions
                 UpdateExplosions(gameTime);
 
-                healShip(gameTime);
+                checkShip(gameTime);
 
                 base.Update(gameTime);
             }
@@ -711,7 +706,7 @@ namespace Shooter
             catch { }
         }
 
-        private void healShip(GameTime gameTime)
+        private void checkShip(GameTime gameTime)
         {
             if (gameTime.TotalGameTime - previousTransportHealTime > transportHealTime)
             {
@@ -720,7 +715,8 @@ namespace Shooter
                 if(transportShipHealth<300)
                 transportShipHealth++;
             }
-
+            if (transportShipHealth <= 0)
+                state = gameState.startScreen;
         }
         private void CheckforSecond()
         {
