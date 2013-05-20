@@ -64,6 +64,7 @@ namespace Shooter
         TimeSpan previousFireTime;
         TimeSpan fireTimex2;
         TimeSpan fireTimex5;
+        TimeSpan transportHealTime, previousTransportHealTime;
         
         // The sound that is played when a laser is fired
         SoundEffect laserSound;
@@ -73,7 +74,7 @@ namespace Shooter
         SoundEffect explosionSound2;
 
         //Number that holds the player score
-        int score, lastScore, missileCount, missileTimer, difficultyTimer;
+        int score, lastScore, missileCount, secondTimer, difficultyTimer,transportShipHealth;
 
         // The font used to display UI elements
         SpriteFont font;
@@ -103,9 +104,10 @@ namespace Shooter
             //Set player's score to zero
             score = 0;
             missileCount = 3;
-            missileTimer = 60;
+            secondTimer = 60;
             difficultyTimer = 0;
             difficultyFactor = 1.0f;
+            transportShipHealth = 300;
 
             projectiles = new List<Laser>();
 
@@ -113,6 +115,7 @@ namespace Shooter
 
             // Set the laser to fire every quarter second
             fireTime = TimeSpan.FromSeconds(.15f);
+            transportHealTime = TimeSpan.FromSeconds(1.1);
 
             //Set the laser to fire twice as fast
             fireTimex2 = TimeSpan.FromSeconds(.075f);
@@ -278,10 +281,13 @@ namespace Shooter
                 UpdateMissiles();
 
                 //Check for missiles
-                CheckforMissile();
+                CheckforSecond();
 
                 // Update the explosions
                 UpdateExplosions(gameTime);
+
+                healShip(gameTime);
+
                 base.Update(gameTime);
             }
         }
@@ -309,6 +315,7 @@ namespace Shooter
                 spriteBatch.Begin();
                 spriteBatch.DrawString(font, "Score: " + score, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y), Color.White);
                 spriteBatch.DrawString(font, "Missiles: " + missileCount, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X+300, GraphicsDevice.Viewport.TitleSafeArea.Y), Color.White);
+                spriteBatch.DrawString(font, "Transport Health: " + transportShipHealth, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X + 500, GraphicsDevice.Viewport.TitleSafeArea.Y), Color.White);
 
 
                 // Draw the player health
@@ -501,6 +508,7 @@ namespace Shooter
                         score += ((int)enemies[i].Value);
 
                     }
+                    else transportShipHealth -= (int)enemies[i].Health;
 
                     enemies.RemoveAt(i);
                 }
@@ -546,6 +554,7 @@ namespace Shooter
                         score += ((int)heavyEnemies[i].Value) ;
 
                     }
+                    else transportShipHealth -= (int)heavyEnemies[i].Health;
 
                     heavyEnemies.RemoveAt(i);
                 }
@@ -588,6 +597,7 @@ namespace Shooter
                             score += ((int)diagonals[i].Value);
 
                         }
+                        else transportShipHealth -= (int)diagonals[i].Health;
 
                         diagonals.RemoveAt(i);
                     }
@@ -701,13 +711,23 @@ namespace Shooter
             catch { }
         }
 
+        private void healShip(GameTime gameTime)
+        {
+            if (gameTime.TotalGameTime - previousTransportHealTime > transportHealTime)
+            {
+                // Reset our current time
+                previousTransportHealTime = gameTime.TotalGameTime;
+                if(transportShipHealth<300)
+                transportShipHealth++;
+            }
 
-        private void CheckforMissile()
+        }
+        private void CheckforSecond()
         {
 
-            if (missileTimer != 60)
-                missileTimer++;
-            if (missileTimer >= 60)
+            if (secondTimer != 60)
+                secondTimer++;
+            if (secondTimer >= 60)
             {
                 if (currentKeyboardState.IsKeyDown(Keys.Space) ||
                GamePad.GetState(PlayerIndex.One).Buttons.RightShoulder == ButtonState.Pressed)
@@ -718,7 +738,7 @@ namespace Shooter
                         missile.Initialize(GraphicsDevice.Viewport, missileTexture, player.Position + new Vector2(player.Width / 2, 0));
                         missiles.Add(missile);
                         missileCount = missileCount - 1;
-                        missileTimer = 0;
+                        secondTimer = 0;
                     }
                 }
             }

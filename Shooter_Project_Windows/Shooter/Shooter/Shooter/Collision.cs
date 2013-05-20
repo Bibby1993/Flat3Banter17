@@ -90,6 +90,55 @@ namespace Shooter
 
             }
 
+            for (int i = 0; i < diagonals.Count; i++)
+            {
+                r2 = new Rectangle((int)diagonals[i].Position.X,
+                (int)diagonals[i].Position.Y - diagonals[i].Height / 2,
+                diagonals[i].Width,
+                diagonals[i].Height);
+
+                // Determine if the two objects collided with each
+                // other
+                if (r1.Intersects(r2))
+                {
+                    // Subtract the health from the player based on
+                    // the enemy damage
+                    player.Health -= (int)diagonals[i].Damage;
+
+                    // Since the enemy collided with the player
+                    // destroy it
+                    diagonals[i].Health = 0;
+
+                    // If the player health is less than zero we died
+                    if (player.Health <= 0)
+                        player.Active = false;
+                }
+                for (int k = 0; k < projectiles.Count; k++)
+                {
+                    r3 = new Rectangle((int)projectiles[k].position.X -
+                    projectiles[k].projectileWidth / 2, (int)projectiles[k].position.Y -
+                    projectiles[k].projectileHeight / 2, projectiles[k].projectileWidth, projectiles[k].projectileHeight);
+
+                    if (r3.Intersects(r2))
+                    {
+                        diagonals[i].Health -= projectiles[k].damage;
+                        projectiles[k].active = false;
+                    }
+                }
+                for (int k = 0; k < missiles.Count; k++)
+                {
+                    r3 = new Rectangle((int)missiles[k].position.X -
+                    missiles[k].projectileWidth / 2, (int)missiles[k].position.Y -
+                    missiles[k].projectileHeight / 2, missiles[k].projectileWidth, missiles[k].projectileHeight);
+
+                    if (r3.Intersects(r2))
+                    {
+                        diagonals[i].Health -= missiles[k].damage;
+                        missiles[k].active = false;
+                    }
+                }
+
+            }
 
             for (int i = 0; i < heavyEnemies.Count; i++)
             {
