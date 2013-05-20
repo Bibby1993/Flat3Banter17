@@ -11,9 +11,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Shooter
 {
-    /// <summary>
-    /// This is the main type for your game
-    /// </summary>
+
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
@@ -36,16 +34,13 @@ namespace Shooter
 
         // Image used to display the static background
         Texture2D mainBackground;
-        Texture2D mainMenu;
-        Texture2D endMenu;
-        Texture2D projectileTexture;
-        Texture2D missileTexture;
+        Texture2D mainMenu, endMenu;
+        Texture2D projectileTexture, missileTexture;
         Texture2D enemyTexture, heavyEnemyTexture, diagonalTexture;
         Texture2D explosionTexture;
 
         // Parallaxing Layers
-        ParallaxingBackground bgLayer1;
-        ParallaxingBackground bgLayer2;
+        ParallaxingBackground bgLayer1, bgLayer2;
 
         // Enemies
         List<Enemy> enemies;
@@ -56,20 +51,17 @@ namespace Shooter
         List<Missile> missiles;
 
         // The rate at which the enemies appear
-        TimeSpan enemySpawnTime;
-        TimeSpan previousSpawnTime;
-        TimeSpan heavyEnemySpawnTime;
-        TimeSpan previousheavyEnemySpawnTime;
+        TimeSpan enemySpawnTime, previousSpawnTime;
+        TimeSpan heavyEnemySpawnTime, previousheavyEnemySpawnTime;
         TimeSpan previousFireTime, fireTime, fireTimex2, fireTimex5;
         TimeSpan transportHealTime, previousTransportHealTime;
         TimeSpan waveTime, previousWaveTime;
         
         // The sound that is played when a laser is fired
         SoundEffect laserSound;
-        SoundEffect explosionSound;
+        SoundEffect explosionSound, explosionSound2;
         Song gameplayMusic;
         Song cryingSound;
-        SoundEffect explosionSound2;
 
         //Number that holds the player score
         int score, lastScore, missileCount, secondTimer, transportShipHealth, waveCounter;
@@ -99,7 +91,7 @@ namespace Shooter
             drawer = new Drawer();
             collision = new Collision();
 
-            //Set player's score to zero
+            //Initial values of variables
             score = 0;
             missileCount = 3;
             secondTimer = 60;
@@ -177,7 +169,6 @@ namespace Shooter
             diagonalTexture = Content.Load<Texture2D>("diagonal");
 
             projectileTexture = Content.Load<Texture2D>("laser");
-
             missileTexture = Content.Load<Texture2D>("rocket");
 
             explosionTexture = Content.Load<Texture2D>("explosion");
@@ -185,7 +176,6 @@ namespace Shooter
             // Load the music
             gameplayMusic = Content.Load<Song>("sound/gameMusic");
             cryingSound = Content.Load<Song>("sound/crying_loud_male");
-            
 
             // Load the laser and explosion sound effect
             laserSound = Content.Load<SoundEffect>("sound/laserFire");
@@ -201,23 +191,15 @@ namespace Shooter
             mainBackground = Content.Load<Texture2D>("mainbackground");
 
             mainMenu = Content.Load<Texture2D>("mainMenu");
-
             endMenu = Content.Load<Texture2D>("endMenu");
-
-            // TODO: use this.Content to load your game content here
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// all content.
-        /// </summary>
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
         }
 
         //============================================================================================================================
-
 
         protected override void Update(GameTime gameTime)
         {
@@ -246,7 +228,6 @@ namespace Shooter
                 currentKeyboardState = Keyboard.GetState();
                 currentGamePadState = GamePad.GetState(PlayerIndex.One);
 
-
                 //Update the player
                 UpdatePlayer(gameTime);
 
@@ -260,6 +241,7 @@ namespace Shooter
                 // Update the Heavy enemies
                 UpdateHeavyEnemies(gameTime);
 
+                // Update diagonals
                 UpdateDiagonals(gameTime);
 
                 // Update the collision
@@ -294,6 +276,7 @@ namespace Shooter
                 spriteBatch.Draw(mainMenu, Vector2.Zero, Color.White);
                 spriteBatch.DrawString(font, "Last score: " + lastScore, new Vector2((GraphicsDevice.Viewport.Width+127)/3, GraphicsDevice.Viewport.Height-200), Color.White);
                 spriteBatch.DrawString(font, "Press enter or A on gamepad to start", new Vector2((GraphicsDevice.Viewport.Width-310)/3, GraphicsDevice.Viewport.Height-310), Color.White);
+
                 spriteBatch.End();
             }
             else if (state==gameState.playing)
@@ -309,9 +292,7 @@ namespace Shooter
                 spriteBatch.DrawString(font, "Missiles: " + missileCount, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X+300, GraphicsDevice.Viewport.TitleSafeArea.Y), Color.White);
                 spriteBatch.DrawString(font, "Transport Health: " + transportShipHealth, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X + 500, GraphicsDevice.Viewport.TitleSafeArea.Y), Color.White);
 
-
                 // Draw the player health
-
                 spriteBatch.DrawString(font, "Health: " + player.Health, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y + 30), healthColor(player.Health));
 
                   if (state == gameState.endScreen)
@@ -351,23 +332,19 @@ namespace Shooter
             player.Position.Y -= currentGamePadState.ThumbSticks.Left.Y * playerMoveSpeed;
 
             // Use the Keyboard / Dpad
-            if (currentKeyboardState.IsKeyDown(Keys.Left) ||
-            currentGamePadState.DPad.Left == ButtonState.Pressed)
+            if (currentKeyboardState.IsKeyDown(Keys.Left) || currentGamePadState.DPad.Left == ButtonState.Pressed)
             {
                 player.Position.X -= playerMoveSpeed;
             }
-            if (currentKeyboardState.IsKeyDown(Keys.Right) ||
-            currentGamePadState.DPad.Right == ButtonState.Pressed)
+            if (currentKeyboardState.IsKeyDown(Keys.Right) || currentGamePadState.DPad.Right == ButtonState.Pressed)
             {
                 player.Position.X += playerMoveSpeed;
             }
-            if (currentKeyboardState.IsKeyDown(Keys.Up) ||
-            currentGamePadState.DPad.Up == ButtonState.Pressed)
+            if (currentKeyboardState.IsKeyDown(Keys.Up) || currentGamePadState.DPad.Up == ButtonState.Pressed)
             {
                 player.Position.Y -= playerMoveSpeed;
             }
-            if (currentKeyboardState.IsKeyDown(Keys.Down) ||
-            currentGamePadState.DPad.Down == ButtonState.Pressed)
+            if (currentKeyboardState.IsKeyDown(Keys.Down) || currentGamePadState.DPad.Down == ButtonState.Pressed)
             {
                 player.Position.Y += playerMoveSpeed;
             }
@@ -376,9 +353,7 @@ namespace Shooter
             player.Position.X = MathHelper.Clamp(player.Position.X, 0, GraphicsDevice.Viewport.Width - player.Width);
             player.Position.Y = MathHelper.Clamp(player.Position.Y, 0, GraphicsDevice.Viewport.Height - player.Height);
 
-
-
-            //Last resort, double fiire rate
+            //Last resort, double fire rate
             if (player.Health <= 10)
             {
                 fireTime = fireTimex2;
@@ -397,7 +372,6 @@ namespace Shooter
                 state = gameState.startScreen;
                 Reset();
             }
-
         }
 
         //==============================================================================================================================
@@ -767,8 +741,6 @@ namespace Shooter
 
             //Reset fire time
             fireTime = TimeSpan.FromSeconds(.15f);
-
         }
-
     }
 }
