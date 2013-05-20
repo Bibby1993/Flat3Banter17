@@ -16,11 +16,11 @@ namespace Shooter
         Player player;
         List<Enemy> enemies;
         List<HeavyEnemy> heavyEnemies;
-        List<Projectile> projectiles;
+        List<Laser> projectiles;
         List<Missile> missiles;
         Rectangle r1, r2, r3;
 
-        public void UpdateVariables(List<Enemy> enemies, List<HeavyEnemy> heavyEnemies, List<Projectile> projectiles,
+        public void UpdateVariables(List<Enemy> enemies, List<HeavyEnemy> heavyEnemies, List<Laser> projectiles,
             Player player, List<Missile> missiles)
         {
             this.enemies = enemies;

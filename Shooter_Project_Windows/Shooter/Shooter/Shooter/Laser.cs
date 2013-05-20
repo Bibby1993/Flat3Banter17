@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Shooter
 {
-    class Projectile : IProjectile
+    class Laser : IProjectile
     {
         override public void Initialize(Viewport viewport, Texture2D texture, Vector2 position)
         {

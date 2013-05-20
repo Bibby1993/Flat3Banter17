@@ -16,7 +16,7 @@ namespace Shooter
         List<Enemy> enemies;
         List<HeavyEnemy> heavyEnemies;
         SpriteBatch spriteBatch;
-        List<Projectile> projectiles;
+        List<Laser> projectiles;
         List<Missile> missiles;
         Player player;
         List<Animation> explosions;
@@ -25,7 +25,7 @@ namespace Shooter
         ParallaxingBackground bgLayer2;
 
 
-        public void UpdateVariables(List<Enemy> enemies, List<HeavyEnemy> heavyEnemies, List<Projectile> projectiles,
+        public void UpdateVariables(List<Enemy> enemies, List<HeavyEnemy> heavyEnemies, List<Laser> projectiles,
             List<Animation> explosions, SpriteBatch spriteBatch, Player player, Texture2D mainBackground,
             ParallaxingBackground bgLayer1, ParallaxingBackground bgLayer2, List<Missile> missiles)
         {

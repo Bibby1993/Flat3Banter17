@@ -51,7 +51,7 @@ namespace Shooter
         List<Enemy> enemies;
         List<HeavyEnemy> heavyEnemies;
         List<Animation> explosions;
-        List<Projectile> projectiles;
+        List<Laser> projectiles;
         List<Missile> missiles;
 
         // The rate at which the enemies appear
@@ -105,7 +105,7 @@ namespace Shooter
             difficultyTimer = 0;
             difficultyFactor = 1.0f;
 
-            projectiles = new List<Projectile>();
+            projectiles = new List<Laser>();
 
             missiles = new List<Missile>();
 
@@ -294,8 +294,6 @@ namespace Shooter
             }
             else if (state==gameState.playing)
             {
-                Color color;
-
                 GraphicsDevice.Clear(Color.CornflowerBlue);
                 drawer.UpdateVariables(enemies, heavyEnemies, projectiles, explosions,
                     spriteBatch, player, mainBackground, bgLayer1, bgLayer2, missiles);
@@ -531,7 +529,7 @@ namespace Shooter
 
         private void AddProjectile(Vector2 position)
         {
-            Projectile projectile = new Projectile();
+            Laser projectile = new Laser();
             projectile.Initialize(GraphicsDevice.Viewport, projectileTexture, position);
             projectiles.Add(projectile);
         }
