@@ -12,19 +12,20 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Shooter
 {
-    class TransportShip
+    class PlayerCutscene
     {
         Vector2 position;
         float viewportWidth, viewportHeight;
         int cutsceneSection = 0;
-        int timer=0;
+        int timer = 0;
+        public bool progress = false;
 
-        public void Initialize(float vpw, float vph)
+        public void Initialize(float vpw, float vph, float tsaw, float tsah)
         {
             viewportHeight = vph;
             viewportWidth = vpw;
             position.X = vpw;
-            position.Y = ((2*vph) / 5) - 10;
+            position.Y = (3*tsah) / 2;
         }
 
         public Vector2 getPosition()
@@ -34,41 +35,58 @@ namespace Shooter
 
         public void Update()
         {
-        switch(cutsceneSection)
+            switch (cutsceneSection)
             {
                 case 0:
                     {
                         //cutscene1: Ships enter the screen
                         position.X--;
 
-                        if (position.X == (viewportWidth)/2)
+                        if (position.X == (viewportWidth) / 2)
                         {
                             cutsceneSection++;
                         }
                         break;
                     }
-                case 1: 
+                case 1:
                     {
                         timer++;
-                        if (timer >= 100)
+                        if (timer >= 300)
                         {
                             cutsceneSection++;
                         }
                         break;
                     }
+
                 case 2:
+                    {
+                        position.Y--;
+                        if (position.Y == ((2*viewportHeight) / 5) + 15)
+                        {
+                            cutsceneSection++;
+                        }
+                        break;
+                    }
+
+                case 3:
                     {
                         position.X--;
                         //TODO fix so that it's dependent upon the size of the transport ship texture size.
                         if (position.X <= 0)
-                            //gamestate update
-                            ;
+                        {
+                            position.X = 0;
+                            timer++;
+                            if (timer >= 400)
+                            {
+                                progress = true;
+                            }
+                        }
                         break;
                     }
 
-                    default:
+                default:
                     {
-                                break;
+                        break;
                     }
             }
 

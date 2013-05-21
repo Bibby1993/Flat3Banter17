@@ -21,6 +21,7 @@ namespace Shooter
         // Represents the player 
         Player player;
         TransportShip transportShip;
+        PlayerCutscene playerCutscene;
 
         // A movement speed for the player
         float playerMoveSpeed, difficultyFactor, viewportWidth, viewportHeight;
@@ -36,7 +37,7 @@ namespace Shooter
         // Image used to display the static background
         Texture2D mainBackground, mainMenu, endMenu;
         Texture2D projectileTexture, missileTexture;
-        Texture2D enemyTexture, heavyEnemyTexture, diagonalTexture, transportTexture;
+        Texture2D enemyTexture, heavyEnemyTexture, diagonalTexture, transportTexture, playerCutsceneTexture;
         Texture2D explosionTexture;
         Texture2D healthBar;
 
@@ -151,6 +152,9 @@ namespace Shooter
             viewportWidth = GraphicsDevice.Viewport.Width;
             transportShip = new TransportShip();
             transportShip.Initialize(viewportWidth,viewportHeight);
+            playerCutscene = new PlayerCutscene();
+            playerCutscene.Initialize(viewportWidth, viewportHeight, GraphicsDevice.Viewport.TitleSafeArea.X, (GraphicsDevice.Viewport.TitleSafeArea.Y
+            + GraphicsDevice.Viewport.TitleSafeArea.Height / 2) - 34);
             base.Initialize();
         }
 
@@ -177,6 +181,7 @@ namespace Shooter
             enemyTexture = Content.Load<Texture2D>("smallShip");
             heavyEnemyTexture = Content.Load<Texture2D>("bigShip");
             diagonalTexture = Content.Load<Texture2D>("diagonal");
+            playerCutsceneTexture = Content.Load<Texture2D>("player");
             transportTexture = Content.Load<Texture2D>("transportShip");
             healthBar = Content.Load<Texture2D>("Health Bar");
 
@@ -184,7 +189,7 @@ namespace Shooter
             missileTexture = Content.Load<Texture2D>("rocket");
 
             explosionTexture = Content.Load<Texture2D>("explosion");
-
+            
             // Load the music
             gameplayMusic = Content.Load<Song>("sound/gameMusic");
             cryingSound = Content.Load<Song>("sound/crying_loud_male");
@@ -230,6 +235,12 @@ namespace Shooter
                 bgLayer1.Update();
                 bgLayer2.Update();
                 transportShip.Update();
+                playerCutscene.Update();
+
+                if (playerCutscene.progress == true)
+                {
+                    state = gameState.playing;
+                }
                 base.Update(gameTime);
 
             }
@@ -305,6 +316,7 @@ namespace Shooter
 
                 spriteBatch.Begin();
                 spriteBatch.Draw(transportTexture, transportShip.getPosition(), Color.White);
+                spriteBatch.Draw(playerCutsceneTexture, playerCutscene.getPosition(), Color.White);
                 spriteBatch.End();
             }
 
