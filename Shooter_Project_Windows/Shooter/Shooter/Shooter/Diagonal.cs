@@ -20,7 +20,6 @@ namespace Shooter
             // We initialize the enemy to be active so it will be update in the game
             Active = true;
 
-
             // Set the health of the enemy
             Health = 5 * df;
 
@@ -31,10 +30,8 @@ namespace Shooter
             enemyMoveSpeedX = 2f * df;
             enemyMoveSpeedY = 3f*df;
 
-
             // Set the score value of the enemy
             Value = 500 * df;
-
         }
 
         public void changeDirection(GraphicsDevice gd) {

@@ -11,16 +11,16 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Shooter
 {
-
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        enum gameState {startScreen, playing, endScreen};
+        enum gameState {startScreen, playing, endScreen, cutscene};
         gameState state;
 
         // Represents the player 
         Player player;
+
         // A movement speed for the player
         float playerMoveSpeed, difficultyFactor;
 
@@ -33,11 +33,11 @@ namespace Shooter
         GamePadState previousGamePadState;
 
         // Image used to display the static background
-        Texture2D mainBackground;
-        Texture2D mainMenu, endMenu;
+        Texture2D mainBackground, mainMenu, endMenu;
         Texture2D projectileTexture, missileTexture;
         Texture2D enemyTexture, heavyEnemyTexture, diagonalTexture;
         Texture2D explosionTexture;
+        Texture2D healthBar;
 
         // Parallaxing Layers
         ParallaxingBackground bgLayer1, bgLayer2;
@@ -64,7 +64,7 @@ namespace Shooter
         Song cryingSound;
 
         //Number that holds the player score
-        int score, lastScore, missileCount, secondTimer, transportShipHealth, waveCounter;
+        int score, lastScore, missileCount, secondTimer, transportShipHealth, healthBarWidth, waveCounter;
 
         // The font used to display UI elements
         SpriteFont font;
@@ -84,12 +84,14 @@ namespace Shooter
 
         protected override void Initialize()
         {
-  
             explosions = new List<Animation>();
             diagonals = new List<Diagonal>();
             state = gameState.startScreen;
             drawer = new Drawer();
             collision = new Collision();
+
+            //Initialize Health Bar
+            healthBarWidth = GraphicsDevice.Viewport.Width;
 
             //Initial values of variables
             score = 0;
@@ -167,6 +169,7 @@ namespace Shooter
             enemyTexture = Content.Load<Texture2D>("smallShip");
             heavyEnemyTexture = Content.Load<Texture2D>("bigShip");
             diagonalTexture = Content.Load<Texture2D>("diagonal");
+            healthBar = Content.Load<Texture2D>("Health Bar");
 
             projectileTexture = Content.Load<Texture2D>("laser");
             missileTexture = Content.Load<Texture2D>("rocket");
@@ -194,10 +197,6 @@ namespace Shooter
             endMenu = Content.Load<Texture2D>("endMenu");
         }
 
-        protected override void UnloadContent()
-        {
-            // TODO: Unload any non ContentManager content here
-        }
 
         //============================================================================================================================
 
@@ -211,15 +210,21 @@ namespace Shooter
                 if (currentKeyboardState.IsKeyDown(Keys.Enter)|| currentGamePadState.Buttons.A == ButtonState.Pressed)
                 {
 
-                    state=gameState.playing;
+                    state=gameState.cutscene
+                        ;
                 }
             }
+
+            else if (state == gameState.cutscene)
+            {
+            }
+
             else
             {
                 // Allows the game to exit
                 if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                     this.Exit();
-                
+
                 // Save the previous state of the keyboard and game pad so we can determinesingle key/button presses
                 previousGamePadState = currentGamePadState;
                 previousKeyboardState = currentKeyboardState;
@@ -245,13 +250,11 @@ namespace Shooter
                 UpdateDiagonals(gameTime);
 
                 // Update the collision
-                collision.UpdateVariables(enemies, heavyEnemies,diagonals, projectiles, player, missiles);
+                collision.UpdateVariables(enemies, heavyEnemies, diagonals, projectiles, player, missiles);
                 collision.collision();
 
-                // Update the projectiles
+                // Update the weapons
                 UpdateProjectiles(gameTime);
-
-                // Update the missiles
                 UpdateMissiles();
 
                 //Check for missiles
@@ -279,23 +282,27 @@ namespace Shooter
 
                 spriteBatch.End();
             }
-            else if (state==gameState.playing)
+            else if (state == gameState.cutscene)
+            {
+            }
+
+            else if (state == gameState.playing)
             {
                 GraphicsDevice.Clear(Color.CornflowerBlue);
                 drawer.UpdateVariables(enemies, heavyEnemies, diagonals, projectiles, explosions,
-                    spriteBatch, player, mainBackground, bgLayer1, bgLayer2, missiles);
+                    spriteBatch, player, mainBackground, healthBar, bgLayer1, bgLayer2, missiles);
                 // Start drawing
                 drawer.DrawAll();
                 // Draw the score
                 spriteBatch.Begin();
                 spriteBatch.DrawString(font, "Score: " + score, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y), Color.White);
-                spriteBatch.DrawString(font, "Missiles: " + missileCount, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X+300, GraphicsDevice.Viewport.TitleSafeArea.Y), Color.White);
+                spriteBatch.DrawString(font, "Missiles: " + missileCount, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X + 300, GraphicsDevice.Viewport.TitleSafeArea.Y), Color.White);
                 spriteBatch.DrawString(font, "Transport Health: " + transportShipHealth, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X + 500, GraphicsDevice.Viewport.TitleSafeArea.Y), Color.White);
 
                 // Draw the player health
                 spriteBatch.DrawString(font, "Health: " + player.Health, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y + 30), healthColor(player.Health));
 
-                  if (state == gameState.endScreen)
+                if (state == gameState.endScreen)
                 {
                     spriteBatch.Begin();
                     spriteBatch.Draw(endMenu, Vector2.Zero, Color.White);
@@ -440,6 +447,7 @@ namespace Shooter
             // Add the heavyEnemy to the active enemies list
             diagonals.Add(diagonal);
         }
+
         //==============================================================================================================================
 
         private void UpdateEnemies(GameTime gameTime)
@@ -474,8 +482,8 @@ namespace Shooter
                         explosionSoundInstance.Play();
 
                         score += ((int)enemies[i].Value);
-
                     }
+
                     else transportShipHealth -= ((int)enemies[i].Health)*3;
 
                     enemies.RemoveAt(i);
@@ -714,7 +722,6 @@ namespace Shooter
         private void Reset()
         {
 
-
             explosions.Clear();
 
             diagonals.Clear();
@@ -734,7 +741,6 @@ namespace Shooter
 
             // Initialize the enemies list
             enemies.Clear();
-
 
             // Initialize the heavyEnemies list
             heavyEnemies.Clear();
