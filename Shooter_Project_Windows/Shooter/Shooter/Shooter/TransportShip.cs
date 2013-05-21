@@ -50,7 +50,7 @@ namespace Shooter
                 case 1: 
                     {
                         timer++;
-                        if (timer >= 100)
+                        if (timer >= 60)
                         {
                             cutsceneSection++;
                         }

@@ -51,7 +51,7 @@ namespace Shooter
                 case 1:
                     {
                         timer++;
-                        if (timer >= 300)
+                        if (timer >= 190)
                         {
                             cutsceneSection++;
                         }
@@ -61,6 +61,7 @@ namespace Shooter
                 case 2:
                     {
                         position.Y--;
+                        position.X--;
                         if (position.Y == ((2*viewportHeight) / 5) + 15)
                         {
                             cutsceneSection++;
@@ -76,7 +77,7 @@ namespace Shooter
                         {
                             position.X = 0;
                             timer++;
-                            if (timer >= 400)
+                            if (timer >= 300)
                             {
                                 progress = true;
                             }
