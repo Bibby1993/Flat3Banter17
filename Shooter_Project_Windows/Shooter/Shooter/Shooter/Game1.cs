@@ -20,9 +20,10 @@ namespace Shooter
 
         // Represents the player 
         Player player;
+        TransportShip transportShip;
 
         // A movement speed for the player
-        float playerMoveSpeed, difficultyFactor;
+        float playerMoveSpeed, difficultyFactor, viewportWidth, viewportHeight;
 
         // Keyboard states used to determine key presses
         KeyboardState currentKeyboardState;
@@ -90,6 +91,7 @@ namespace Shooter
             drawer = new Drawer();
             collision = new Collision();
 
+
             //Initialize Health Bar
             healthBarWidth = GraphicsDevice.Viewport.Width;
 
@@ -141,8 +143,14 @@ namespace Shooter
             // Initialize the player class
             player = new Player();
 
+
             // Set a constant player move speed
             playerMoveSpeed = 12.0f;
+
+            viewportHeight = GraphicsDevice.Viewport.Height;
+            viewportWidth = GraphicsDevice.Viewport.Width;
+            transportShip = new TransportShip();
+            transportShip.Initialize(viewportWidth,viewportHeight);
             base.Initialize();
         }
 
@@ -196,6 +204,7 @@ namespace Shooter
 
             mainMenu = Content.Load<Texture2D>("mainMenu");
             endMenu = Content.Load<Texture2D>("endMenu");
+            
         }
 
 
@@ -220,9 +229,8 @@ namespace Shooter
                 // Update the parallaxing background
                 bgLayer1.Update();
                 bgLayer2.Update();
-
-                drawer.UpdateVariables(enemies, heavyEnemies, diagonals, projectiles, explosions,
-                spriteBatch, player, mainBackground, healthBar, bgLayer1, bgLayer2, missiles);
+                transportShip.Update();
+                base.Update(gameTime);
 
             }
 
@@ -290,8 +298,13 @@ namespace Shooter
             }
             else if (state == gameState.cutscene)
             {
+                drawer.UpdateVariables(enemies, heavyEnemies, diagonals, projectiles, explosions,
+                 spriteBatch, player, mainBackground, healthBar, bgLayer1, bgLayer2, missiles);
+            
+                drawer.DrawSomeBackgrounds();
+
                 spriteBatch.Begin();
-                spriteBatch.Draw(transportTexture, Vector2.Zero, Color.White);
+                spriteBatch.Draw(transportTexture, transportShip.getPosition(), Color.White);
                 spriteBatch.End();
             }
 

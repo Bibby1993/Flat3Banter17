@@ -55,6 +55,13 @@ namespace Shooter
             spriteBatch.End();
         }
 
+        public void DrawSomeBackgrounds()
+        {
+            spriteBatch.Begin();
+            DrawBackgrounds();
+            spriteBatch.End();
+        }
+
         private void DrawAllEnemies()
         {
             // Draw the Heavy Enemies
