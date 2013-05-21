@@ -35,7 +35,7 @@ namespace Shooter
         // Image used to display the static background
         Texture2D mainBackground, mainMenu, endMenu;
         Texture2D projectileTexture, missileTexture;
-        Texture2D enemyTexture, heavyEnemyTexture, diagonalTexture;
+        Texture2D enemyTexture, heavyEnemyTexture, diagonalTexture, transportTexture;
         Texture2D explosionTexture;
         Texture2D healthBar;
 
@@ -169,6 +169,7 @@ namespace Shooter
             enemyTexture = Content.Load<Texture2D>("smallShip");
             heavyEnemyTexture = Content.Load<Texture2D>("bigShip");
             diagonalTexture = Content.Load<Texture2D>("diagonal");
+            transportTexture = Content.Load<Texture2D>("transportShip");
             healthBar = Content.Load<Texture2D>("Health Bar");
 
             projectileTexture = Content.Load<Texture2D>("laser");
@@ -210,13 +211,19 @@ namespace Shooter
                 if (currentKeyboardState.IsKeyDown(Keys.Enter)|| currentGamePadState.Buttons.A == ButtonState.Pressed)
                 {
 
-                    state=gameState.cutscene
-                        ;
+                    state=gameState.cutscene;
                 }
             }
 
             else if (state == gameState.cutscene)
             {
+                // Update the parallaxing background
+                bgLayer1.Update();
+                bgLayer2.Update();
+
+                drawer.UpdateVariables(enemies, heavyEnemies, diagonals, projectiles, explosions,
+                spriteBatch, player, mainBackground, healthBar, bgLayer1, bgLayer2, missiles);
+
             }
 
             else
@@ -279,11 +286,13 @@ namespace Shooter
                 spriteBatch.Draw(mainMenu, Vector2.Zero, Color.White);
                 spriteBatch.DrawString(font, "Last score: " + lastScore, new Vector2((GraphicsDevice.Viewport.Width+127)/3, GraphicsDevice.Viewport.Height-200), Color.White);
                 spriteBatch.DrawString(font, "Press enter or A on gamepad to start", new Vector2((GraphicsDevice.Viewport.Width-310)/3, GraphicsDevice.Viewport.Height-310), Color.White);
-
                 spriteBatch.End();
             }
             else if (state == gameState.cutscene)
             {
+                spriteBatch.Begin();
+                spriteBatch.Draw(transportTexture, Vector2.Zero, Color.White);
+                spriteBatch.End();
             }
 
             else if (state == gameState.playing)
