@@ -20,7 +20,7 @@ namespace Shooter
         List<HealthPowerUp> healthPowerUps;
         List<Laser> projectiles;
         List<Missile> missiles;
-        Rectangle r1, r2, r3;
+        Rectangle r1, r2, r3, r4;
 
         public void UpdateVariables(List<Enemy> enemies, List<HeavyEnemy> heavyEnemies, List<Diagonal> diagonals, List<HealthPowerUp> healthPowerUps, List<Laser> projectiles,
             Player player, List<Missile> missiles)
@@ -195,18 +195,17 @@ namespace Shooter
 
             for (int i = 0; i < healthPowerUps.Count; i++)
             {
-                r2 = new Rectangle((int)healthPowerUps[i].powerUpPosition.X,
+                r4 = new Rectangle((int)healthPowerUps[i].powerUpPosition.X,
                 (int)healthPowerUps[i].powerUpPosition.Y - healthPowerUps[i].Width / 2,
                 healthPowerUps[i].Width,
                 healthPowerUps[i].Height);
 
                 // Determine if the two objects collided with each
                 // other
-                if (r1.Intersects(r2))
+                if (r1.Intersects(r4))
                 {
-                    // If the player health is less than zero we died
-                    if (player.Health <= 0)
-                        player.Active = false;
+                    healthPowerUps[i].powerUpActive = false;
+                    player.Health = player.Health + 30;
                 }
             }
         }

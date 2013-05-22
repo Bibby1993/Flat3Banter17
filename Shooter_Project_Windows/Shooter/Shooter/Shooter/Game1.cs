@@ -139,8 +139,11 @@ namespace Shooter
             // Used to determine how fast enemy respawns
             enemySpawnTime = TimeSpan.FromSeconds(1.0f);
 
-            // Used to determine how fast enemy respawns
+            // Used to determine how fast heavy enemy respawns
             heavyEnemySpawnTime = TimeSpan.FromSeconds(1.0f);
+
+            //Used to determine how fast health power ups respawn
+            healthPowerUpSpawnTime = TimeSpan.FromSeconds(1.0f);
 
             // Initialize our random number generator
             random = new Random();
@@ -191,7 +194,7 @@ namespace Shooter
             playerCutsceneTexture = Content.Load<Texture2D>("player");
             transportTexture = Content.Load<Texture2D>("transportShip");
             healthBar = Content.Load<Texture2D>("Health Bar");
-            healthPowerUpTexture = Content.Load<Texture2D>("Box");
+            healthPowerUpTexture = Content.Load<Texture2D>("HealthPowerUp");
 
             projectileTexture = Content.Load<Texture2D>("laser");
             missileTexture = Content.Load<Texture2D>("rocket");

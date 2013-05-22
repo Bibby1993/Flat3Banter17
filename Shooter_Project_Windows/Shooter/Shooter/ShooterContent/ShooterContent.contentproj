@@ -255,8 +255,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Box.png">
-      <Name>Box</Name>
+    <Compile Include="HealthPowerUp.png">
+      <Name>HealthPowerUp</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
