@@ -126,8 +126,10 @@
     <Compile Include="Diagonal.cs" />
     <Compile Include="Drawer.cs" />
     <Compile Include="Enemy.cs" />
+    <Compile Include="HealthPowerUp.cs" />
     <Compile Include="HeavyEnemy.cs" />
     <Compile Include="IEnemy.cs" />
+    <Compile Include="IPowerUps.cs" />
     <Compile Include="IProjectile.cs" />
     <Compile Include="Missile.cs" />
     <Compile Include="ParallaxingBackground.cs" />

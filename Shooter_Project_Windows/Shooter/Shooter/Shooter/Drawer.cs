@@ -16,6 +16,7 @@ namespace Shooter
         List<Enemy> enemies;
         List<HeavyEnemy> heavyEnemies;
         List<Diagonal> diagonals;
+        List<HealthPowerUp> healthPowerUps;
         SpriteBatch spriteBatch;
         List<Laser> projectiles;
         List<Missile> missiles;
@@ -27,13 +28,14 @@ namespace Shooter
         ParallaxingBackground bgLayer2;
         int healthBarWidth;
 
-        public void UpdateVariables(List<Enemy> enemies, List<HeavyEnemy> heavyEnemies, List<Diagonal> diagonals, List<Laser> projectiles,
+        public void UpdateVariables(List<Enemy> enemies, List<HeavyEnemy> heavyEnemies, List<Diagonal> diagonals, List<HealthPowerUp> healthPowerUps, List<Laser> projectiles,
             List<Animation> explosions, SpriteBatch spriteBatch, Player player, Texture2D mainBackground, Texture2D healthBar, 
             ParallaxingBackground bgLayer1, ParallaxingBackground bgLayer2, List<Missile> missiles)
         {
             this.enemies = enemies;
             this.heavyEnemies = heavyEnemies;
             this.diagonals = diagonals;
+            this.healthPowerUps = healthPowerUps;
             this.spriteBatch = spriteBatch;
             this.projectiles = projectiles;
             this.explosions = explosions;
@@ -52,6 +54,7 @@ namespace Shooter
             DrawBackgrounds();
             DrawAllEnemies();
             DrawPlayerAndProjectiles();
+            DrawAllPowerUps();
             spriteBatch.End();
         }
 
@@ -79,6 +82,16 @@ namespace Shooter
             for (int i = 0; i < diagonals.Count; i++)
             {
                 diagonals[i].Draw(spriteBatch);
+            }
+
+        }
+
+        private void DrawAllPowerUps()
+        {
+            // Draw the Health Power Ups
+            for (int i = 0; i < healthPowerUps.Count; i++)
+            {
+                healthPowerUps[i].Draw(spriteBatch);
             }
 
         }

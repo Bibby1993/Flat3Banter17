@@ -17,11 +17,12 @@ namespace Shooter
         List<Enemy> enemies;
         List<HeavyEnemy> heavyEnemies;
         List<Diagonal> diagonals;
+        List<HealthPowerUp> healthPowerUps;
         List<Laser> projectiles;
         List<Missile> missiles;
         Rectangle r1, r2, r3;
 
-        public void UpdateVariables(List<Enemy> enemies, List<HeavyEnemy> heavyEnemies, List<Diagonal> diagonals, List<Laser> projectiles,
+        public void UpdateVariables(List<Enemy> enemies, List<HeavyEnemy> heavyEnemies, List<Diagonal> diagonals, List<HealthPowerUp> healthPowerUps, List<Laser> projectiles,
             Player player, List<Missile> missiles)
         {
             this.enemies = enemies;
@@ -30,6 +31,7 @@ namespace Shooter
             this.player = player;
             this.missiles = missiles;
             this.diagonals = diagonals;
+            this.healthPowerUps = healthPowerUps;
         }
 
         public void collision()
@@ -113,7 +115,6 @@ namespace Shooter
                     if (player.Health <= 0)
                         player.Active = false;
 
-
                 }
                 for (int k = 0; k < projectiles.Count; k++)
                 {
@@ -191,7 +192,23 @@ namespace Shooter
                 }
 
             }
-        }
 
+            for (int i = 0; i < healthPowerUps.Count; i++)
+            {
+                r2 = new Rectangle((int)healthPowerUps[i].powerUpPosition.X,
+                (int)healthPowerUps[i].powerUpPosition.Y - healthPowerUps[i].Width / 2,
+                healthPowerUps[i].Width,
+                healthPowerUps[i].Height);
+
+                // Determine if the two objects collided with each
+                // other
+                if (r1.Intersects(r2))
+                {
+                    // If the player health is less than zero we died
+                    if (player.Health <= 0)
+                        player.Active = false;
+                }
+            }
+        }
     }
 }

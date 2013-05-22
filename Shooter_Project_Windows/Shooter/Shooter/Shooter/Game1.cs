@@ -37,7 +37,7 @@ namespace Shooter
         // Image used to display the static background
         Texture2D mainBackground, mainMenu, endMenu;
         Texture2D projectileTexture, missileTexture;
-        Texture2D enemyTexture, heavyEnemyTexture, diagonalTexture, transportTexture, playerCutsceneTexture;
+        Texture2D enemyTexture, heavyEnemyTexture, diagonalTexture, transportTexture, playerCutsceneTexture, healthPowerUpTexture;
         Texture2D explosionTexture;
         Texture2D healthBar;
 
@@ -51,9 +51,11 @@ namespace Shooter
         List<Animation> explosions;
         List<Laser> projectiles;
         List<Missile> missiles;
+        List<HealthPowerUp> healthPowerUps;
 
         // The rate at which the enemies appear
         TimeSpan enemySpawnTime, previousSpawnTime;
+        TimeSpan healthPowerUpSpawnTime, previousHealthPowerUpSpawnTime;
         TimeSpan heavyEnemySpawnTime, previousheavyEnemySpawnTime;
         TimeSpan previousFireTime, fireTime, fireTimex2, fireTimex5;
         TimeSpan transportHealTime, previousTransportHealTime;
@@ -107,6 +109,8 @@ namespace Shooter
 
             missiles = new List<Missile>();
 
+            healthPowerUps = new List<HealthPowerUp>();
+
             // Set the laser to fire every quarter second
             fireTime = TimeSpan.FromSeconds(.15f);
             transportHealTime = TimeSpan.FromSeconds(1.1);
@@ -125,6 +129,9 @@ namespace Shooter
 
             // Set the time keepers to zero
             previousSpawnTime = TimeSpan.Zero;
+
+            // Set the time keepers to zero
+            previousHealthPowerUpSpawnTime = TimeSpan.Zero;
 
             // Set the time keepers to zero
             previousheavyEnemySpawnTime = TimeSpan.Zero;
@@ -184,6 +191,7 @@ namespace Shooter
             playerCutsceneTexture = Content.Load<Texture2D>("player");
             transportTexture = Content.Load<Texture2D>("transportShip");
             healthBar = Content.Load<Texture2D>("Health Bar");
+            healthPowerUpTexture = Content.Load<Texture2D>("Box");
 
             projectileTexture = Content.Load<Texture2D>("laser");
             missileTexture = Content.Load<Texture2D>("rocket");
@@ -275,8 +283,11 @@ namespace Shooter
                 // Update diagonals
                 UpdateDiagonals(gameTime);
 
+                // Update Health Power Ups
+                UpdateHealthPowerUps(gameTime);
+
                 // Update the collision
-                collision.UpdateVariables(enemies, heavyEnemies, diagonals, projectiles, player, missiles);
+                collision.UpdateVariables(enemies, heavyEnemies, diagonals, healthPowerUps, projectiles, player, missiles);
                 collision.collision();
 
                 // Update the weapons
@@ -309,7 +320,7 @@ namespace Shooter
             }
             else if (state == gameState.cutscene)
             {
-                drawer.UpdateVariables(enemies, heavyEnemies, diagonals, projectiles, explosions,
+                drawer.UpdateVariables(enemies, heavyEnemies, diagonals, healthPowerUps, projectiles, explosions,
                  spriteBatch, player, mainBackground, healthBar, bgLayer1, bgLayer2, missiles);
             
                 drawer.DrawSomeBackgrounds();
@@ -323,7 +334,7 @@ namespace Shooter
             else if (state == gameState.playing)
             {
                 GraphicsDevice.Clear(Color.CornflowerBlue);
-                drawer.UpdateVariables(enemies, heavyEnemies, diagonals, projectiles, explosions,
+                drawer.UpdateVariables(enemies, heavyEnemies, diagonals, healthPowerUps, projectiles, explosions,
                     spriteBatch, player, mainBackground, healthBar, bgLayer1, bgLayer2, missiles);
                 // Start drawing
                 drawer.DrawAll();
@@ -462,6 +473,8 @@ namespace Shooter
             heavyEnemies.Add(heavyEnemy);
         }
 
+        //=============================================================================================================================================
+
         private void AddDiagonal()
         {
             // Create the animation object
@@ -479,8 +492,31 @@ namespace Shooter
             // Initialize the enemy
             diagonal.Initialize(DiagonalAnimation, position, difficultyFactor);
 
-            // Add the heavyEnemy to the active enemies list
+            // Add the digonal to the active enemies list
             diagonals.Add(diagonal);
+        }
+
+        //==============================================================================================================================
+
+        private void AddHealthPowerUp()
+        {
+            // Create the animation object
+            Animation healthPowerUpAnimation = new Animation();
+
+            // Initialize the animation with the correct animation information
+            healthPowerUpAnimation.Initialize(healthPowerUpTexture, Vector2.Zero, healthPowerUpTexture.Width, healthPowerUpTexture.Height, 1, 30, Color.White, 1f, true);
+
+            // Randomly generate the position of the health power up
+            Vector2 position = new Vector2(GraphicsDevice.Viewport.Width + healthPowerUpTexture.Width / 2, random.Next(100, GraphicsDevice.Viewport.Height - 100));
+
+            // Create a power up
+            HealthPowerUp healthPowerUp = new HealthPowerUp();
+
+            // Initialize the health power up
+            healthPowerUp.Initialize(healthPowerUpAnimation, position, difficultyFactor);
+
+            // Add the health power up to the active power up list
+            healthPowerUps.Add(healthPowerUp);
         }
 
         //==============================================================================================================================
@@ -572,6 +608,8 @@ namespace Shooter
             }
         }
 
+        //================================================================================================================================
+
         private void UpdateDiagonals(GameTime gameTime)
         {
             {
@@ -587,7 +625,7 @@ namespace Shooter
 
                 if (diagonals.Count <= 0)
                     AddDiagonal();
-                // Update the Heavy Enemies
+                // Update the diagonals
                 for (int i = diagonals.Count - 1; i >= 0; i--)
                 {
                     diagonals[i].Update(gameTime);
@@ -621,6 +659,32 @@ namespace Shooter
             Laser projectile = new Laser();
             projectile.Initialize(GraphicsDevice.Viewport, projectileTexture, position);
             projectiles.Add(projectile);
+        }
+
+        //==============================================================================================================================
+
+        private void UpdateHealthPowerUps(GameTime gameTime)
+        {
+            // Spawn a new health power up every 1.5 seconds
+            if (gameTime.TotalGameTime - previousHealthPowerUpSpawnTime > healthPowerUpSpawnTime)
+            {
+                previousSpawnTime = gameTime.TotalGameTime;
+
+                // Add a health power up
+                AddHealthPowerUp();
+            }
+
+            // Update the Health Power Ups
+            for (int i = healthPowerUps.Count - 1; i >= 0; i--)
+            {
+                healthPowerUps[i].Update(gameTime);
+
+                if (healthPowerUps[i].powerUpActive == false)
+                {
+
+                    healthPowerUps.RemoveAt(i);
+                }
+            }
         }
 
         //==============================================================================================================================
@@ -776,6 +840,9 @@ namespace Shooter
 
             // Initialize the enemies list
             enemies.Clear();
+            
+            // Initialize the health power up list
+            healthPowerUps.Clear();
 
             // Initialize the heavyEnemies list
             heavyEnemies.Clear();
