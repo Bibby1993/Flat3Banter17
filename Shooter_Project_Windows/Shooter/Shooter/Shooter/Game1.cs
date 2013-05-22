@@ -317,7 +317,6 @@ namespace Shooter
                 spriteBatch.Begin();
                 spriteBatch.Draw(transportTexture, transportShip.getPosition(), Color.White);
                 spriteBatch.Draw(playerCutsceneTexture, playerCutscene.getPosition(), Color.White);
-                spriteBatch.DrawString(font, "DEFEND THE TRANSPORT SHIP!", new Vector2((GraphicsDevice.Viewport.Width - 100) / 3, GraphicsDevice.Viewport.Height - 410), Color.White);
                 spriteBatch.End();
             }
 
