@@ -195,13 +195,12 @@ namespace Shooter
 
             for (int i = 0; i < healthPowerUps.Count; i++)
             {
-                r4 = new Rectangle((int)healthPowerUps[i].powerUpPosition.X,
-                (int)healthPowerUps[i].powerUpPosition.Y - healthPowerUps[i].Width / 2,
+                r4 = new Rectangle((int)healthPowerUps[i].powerUpPosition.X + healthPowerUps[i].Height + 20,
+                (int)healthPowerUps[i].powerUpPosition.Y + healthPowerUps[i].Height / 2,
                 healthPowerUps[i].Width,
                 healthPowerUps[i].Height);
 
-                // Determine if the two objects collided with each
-                // other
+                // Determine if the two objects collided with each other
                 if (r1.Intersects(r4))
                 {
                     healthPowerUps[i].powerUpActive = false;

@@ -119,7 +119,7 @@ namespace Shooter
             fireTimex2 = TimeSpan.FromSeconds(.075f);
 
             //Set the laser to fire stupid as fast
-            fireTimex5 = TimeSpan.FromSeconds(.03f);
+            fireTimex5 = TimeSpan.FromSeconds(0.03f);
 
             // Initialize the enemies list
             enemies = new List<Enemy>();
@@ -143,7 +143,7 @@ namespace Shooter
             heavyEnemySpawnTime = TimeSpan.FromSeconds(1.0f);
 
             //Used to determine how fast health power ups respawn
-            healthPowerUpSpawnTime = TimeSpan.FromSeconds(1.0f);
+            healthPowerUpSpawnTime = TimeSpan.FromSeconds(50.0f);
 
             // Initialize our random number generator
             random = new Random();
@@ -153,7 +153,6 @@ namespace Shooter
 
             // Initialize the player class
             player = new Player();
-
 
             // Set a constant player move speed
             playerMoveSpeed = 12.0f;
@@ -410,9 +409,14 @@ namespace Shooter
             player.Position.Y = MathHelper.Clamp(player.Position.Y, player.Height / 2, GraphicsDevice.Viewport.Height - (player.Height / 2));
 
             //Last resort, double fire rate
-            if (player.Health <= 10)
+            if (player.Health <= 5)
             {
                 fireTime = fireTimex2;
+            }
+
+            if (player.Health > 5)
+            {
+                fireTime = TimeSpan.FromSeconds(0.15f);
             }
 
             // reset score if player health goes to zero
@@ -671,7 +675,7 @@ namespace Shooter
             // Spawn a new health power up every 1.5 seconds
             if (gameTime.TotalGameTime - previousHealthPowerUpSpawnTime > healthPowerUpSpawnTime)
             {
-                previousSpawnTime = gameTime.TotalGameTime;
+                previousHealthPowerUpSpawnTime = gameTime.TotalGameTime;
 
                 // Add a health power up
                 AddHealthPowerUp();
