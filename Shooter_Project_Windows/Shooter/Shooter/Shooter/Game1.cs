@@ -154,7 +154,7 @@ namespace Shooter
             healthPowerUpSpawnTime = TimeSpan.FromSeconds(50.0f);
 
             //Used to determine how fast health power ups respawn
-            missilePowerUpSpawnTime = TimeSpan.FromSeconds(1.0f);
+            missilePowerUpSpawnTime = TimeSpan.FromSeconds(80.0f);
 
             // Initialize our random number generator
             random = new Random();
@@ -188,7 +188,7 @@ namespace Shooter
             // Load the player resources
             Animation playerAnimation = new Animation();
             Texture2D playerTexture = Content.Load<Texture2D>("shipAnimation");
-            playerAnimation.Initialize(playerTexture, Vector2.Zero, 115, 69, 1, 30, Color.White, 1f, true);
+            playerAnimation.Initialize(playerTexture, Vector2.Zero, 79, 58, 1, 30, Color.White, 1f, true);
 
             Vector2 playerPosition = new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y
             + GraphicsDevice.Viewport.TitleSafeArea.Height / 2);
@@ -247,8 +247,10 @@ namespace Shooter
                 if (currentKeyboardState.IsKeyDown(Keys.Enter)|| currentGamePadState.Buttons.A == ButtonState.Pressed)
                 {
 
-                    state=gameState.cutscene;
+                    state = gameState.cutscene;
+
                 }
+
             }
 
             else if (state == gameState.cutscene)
@@ -259,10 +261,20 @@ namespace Shooter
                 transportShip.Update();
                 playerCutscene.Update();
 
+                currentKeyboardState = Keyboard.GetState();
+                currentGamePadState = GamePad.GetState(PlayerIndex.One);
+
                 if (playerCutscene.progress == true)
                 {
                     state = gameState.playing;
                 }
+
+                else if (currentKeyboardState.IsKeyDown(Keys.Escape) || currentGamePadState.Buttons.Start == ButtonState.Pressed)
+                {
+
+                    state = gameState.playing;
+                }
+
                 base.Update(gameTime);
 
             }
@@ -318,6 +330,8 @@ namespace Shooter
                 UpdateExplosions(gameTime);
 
                 checkShip(gameTime);
+
+                this.missileCount = GetMissilecount();
 
                 base.Update(gameTime);
             }
@@ -880,12 +894,12 @@ namespace Shooter
                 if (currentKeyboardState.IsKeyDown(Keys.Space) ||
                GamePad.GetState(PlayerIndex.One).Buttons.RightShoulder == ButtonState.Pressed)
                 {
-                    if (missileCount > 0)
+                    if (collision.missileCount > 0)
                     {
                         Missile missile = new Missile();
                         missile.Initialize(GraphicsDevice.Viewport, missileTexture, player.Position + new Vector2(player.Width / 2, 0));
                         missiles.Add(missile);
-                        missileCount = missileCount - 1;
+                        collision.missileCount = collision.missileCount - 1;
                         secondTimer = 0;
                     }
                 }
@@ -926,6 +940,11 @@ namespace Shooter
 
             //Reset fire time
             fireTime = TimeSpan.FromSeconds(.15f);
+        }
+
+        public int GetMissilecount()
+        {
+            return collision.missileCount;
         }
     }
 }

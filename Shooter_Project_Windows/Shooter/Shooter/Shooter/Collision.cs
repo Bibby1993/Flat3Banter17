@@ -22,10 +22,10 @@ namespace Shooter
         List<Laser> projectiles;
         List<Missile> missiles;
         Rectangle r1, r2, r3, r4, r5;
-        int missileCount;
+        public int missileCount;
 
-        public void UpdateVariables(List<Enemy> enemies, List<HeavyEnemy> heavyEnemies, List<Diagonal> diagonals, List<HealthPowerUp> healthPowerUps, List<MissilePowerUp> missilePowerUps, List<Laser> projectiles,
-            Player player, List<Missile> missiles, int missileCount)
+        public void UpdateVariables(List<Enemy> enemies, List<HeavyEnemy> heavyEnemies, List<Diagonal> diagonals, List<HealthPowerUp> healthPowerUps,
+            List<MissilePowerUp> missilePowerUps, List<Laser> projectiles, Player player, List<Missile> missiles, int missileCount)
         {
             this.enemies = enemies;
             this.heavyEnemies = heavyEnemies;
