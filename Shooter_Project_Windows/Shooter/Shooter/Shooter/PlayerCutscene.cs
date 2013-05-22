@@ -77,7 +77,7 @@ namespace Shooter
                         {
                             position.X = 0;
                             timer++;
-                            if (timer >= 300)
+                            if (timer >= 360)
                             {
                                 progress = true;
                             }
