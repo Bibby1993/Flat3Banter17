@@ -353,7 +353,8 @@ namespace Shooter
 
         //===================================================================================================================================
        
-        private Color healthColor(int health) {
+        private Color healthColor(int health) 
+        {
             if (player.Health <= 50 && player.Health > 25)
             {
                 return Color.Yellow;
