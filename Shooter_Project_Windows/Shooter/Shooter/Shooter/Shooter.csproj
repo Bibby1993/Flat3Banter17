@@ -132,6 +132,7 @@
     <Compile Include="IPowerUps.cs" />
     <Compile Include="IProjectile.cs" />
     <Compile Include="Missile.cs" />
+    <Compile Include="MissilePowerUp.cs" />
     <Compile Include="ParallaxingBackground.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Laser.cs" />

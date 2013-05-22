@@ -37,7 +37,7 @@ namespace Shooter
         // Image used to display the static background
         Texture2D mainBackground, mainMenu, endMenu;
         Texture2D projectileTexture, missileTexture;
-        Texture2D enemyTexture, heavyEnemyTexture, diagonalTexture, transportTexture, playerCutsceneTexture, healthPowerUpTexture;
+        Texture2D enemyTexture, heavyEnemyTexture, diagonalTexture, transportTexture, playerCutsceneTexture, healthPowerUpTexture, missilePowerUpTexture;
         Texture2D explosionTexture;
         Texture2D healthBar;
 
@@ -52,10 +52,12 @@ namespace Shooter
         List<Laser> projectiles;
         List<Missile> missiles;
         List<HealthPowerUp> healthPowerUps;
+        List<MissilePowerUp> missilePowerUps;
 
         // The rate at which the enemies appear
         TimeSpan enemySpawnTime, previousSpawnTime;
         TimeSpan healthPowerUpSpawnTime, previousHealthPowerUpSpawnTime;
+        TimeSpan missilePowerUpSpawnTime, previousMissilePowerUpSpawnTime;
         TimeSpan heavyEnemySpawnTime, previousheavyEnemySpawnTime;
         TimeSpan previousFireTime, fireTime, fireTimex2, fireTimex5;
         TimeSpan transportHealTime, previousTransportHealTime;
@@ -68,7 +70,8 @@ namespace Shooter
         Song cryingSound;
 
         //Number that holds the player score
-        int score, lastScore, missileCount, secondTimer, transportShipHealth, healthBarWidth, waveCounter;
+        int score, lastScore, secondTimer, transportShipHealth, healthBarWidth, waveCounter;
+        public int missileCount;
 
         // The font used to display UI elements
         SpriteFont font;
@@ -111,6 +114,8 @@ namespace Shooter
 
             healthPowerUps = new List<HealthPowerUp>();
 
+            missilePowerUps = new List<MissilePowerUp>();
+
             // Set the laser to fire every quarter second
             fireTime = TimeSpan.FromSeconds(.15f);
             transportHealTime = TimeSpan.FromSeconds(1.1);
@@ -134,6 +139,9 @@ namespace Shooter
             previousHealthPowerUpSpawnTime = TimeSpan.Zero;
 
             // Set the time keepers to zero
+            previousMissilePowerUpSpawnTime = TimeSpan.Zero;
+
+            // Set the time keepers to zero
             previousheavyEnemySpawnTime = TimeSpan.Zero;
 
             // Used to determine how fast enemy respawns
@@ -144,6 +152,9 @@ namespace Shooter
 
             //Used to determine how fast health power ups respawn
             healthPowerUpSpawnTime = TimeSpan.FromSeconds(50.0f);
+
+            //Used to determine how fast health power ups respawn
+            missilePowerUpSpawnTime = TimeSpan.FromSeconds(1.0f);
 
             // Initialize our random number generator
             random = new Random();
@@ -194,6 +205,7 @@ namespace Shooter
             transportTexture = Content.Load<Texture2D>("transportShip");
             healthBar = Content.Load<Texture2D>("Health Bar");
             healthPowerUpTexture = Content.Load<Texture2D>("HealthPowerUp");
+            missilePowerUpTexture = Content.Load<Texture2D>("MissilePowerUp");
 
             projectileTexture = Content.Load<Texture2D>("laser");
             missileTexture = Content.Load<Texture2D>("rocket");
@@ -288,8 +300,11 @@ namespace Shooter
                 // Update Health Power Ups
                 UpdateHealthPowerUps(gameTime);
 
+                // Update Missile Power Ups
+                UpdateMissilePowerUps(gameTime);
+
                 // Update the collision
-                collision.UpdateVariables(enemies, heavyEnemies, diagonals, healthPowerUps, projectiles, player, missiles);
+                collision.UpdateVariables(enemies, heavyEnemies, diagonals, healthPowerUps, missilePowerUps, projectiles, player, missiles, missileCount);
                 collision.collision();
 
                 // Update the weapons
@@ -322,7 +337,7 @@ namespace Shooter
             }
             else if (state == gameState.cutscene)
             {
-                drawer.UpdateVariables(enemies, heavyEnemies, diagonals, healthPowerUps, projectiles, explosions,
+                drawer.UpdateVariables(enemies, heavyEnemies, diagonals, healthPowerUps, missilePowerUps, projectiles, explosions,
                  spriteBatch, player, mainBackground, healthBar, bgLayer1, bgLayer2, missiles);
             
                 drawer.DrawSomeBackgrounds();
@@ -336,7 +351,7 @@ namespace Shooter
             else if (state == gameState.playing)
             {
                 GraphicsDevice.Clear(Color.CornflowerBlue);
-                drawer.UpdateVariables(enemies, heavyEnemies, diagonals, healthPowerUps, projectiles, explosions,
+                drawer.UpdateVariables(enemies, heavyEnemies, diagonals, healthPowerUps, missilePowerUps, projectiles, explosions,
                     spriteBatch, player, mainBackground, healthBar, bgLayer1, bgLayer2, missiles);
                 // Start drawing
                 drawer.DrawAll();
@@ -377,6 +392,8 @@ namespace Shooter
             }
             else return Color.Green;
         }
+
+        //=====================================================================================================================================
 
         private void UpdatePlayer(GameTime gameTime)
         {
@@ -528,6 +545,29 @@ namespace Shooter
 
         //==============================================================================================================================
 
+        private void AddMissilePowerUp()
+        {
+            // Create the animation object
+            Animation missilePowerUpAnimation = new Animation();
+
+            // Initialize the animation with the correct animation information
+            missilePowerUpAnimation.Initialize(missilePowerUpTexture, Vector2.Zero, missilePowerUpTexture.Width, missilePowerUpTexture.Height, 1, 30, Color.White, 1f, true);
+
+            // Randomly generate the position of the missile power up
+            Vector2 position = new Vector2(GraphicsDevice.Viewport.Width + missilePowerUpTexture.Width / 2, random.Next(100, GraphicsDevice.Viewport.Height - 100));
+
+            // Create a power up
+            MissilePowerUp missilePowerUp = new MissilePowerUp();
+
+            // Initialize the missile power up
+            missilePowerUp.Initialize(missilePowerUpAnimation, position, difficultyFactor);
+
+            // Add the missile power up to the active power up list
+            missilePowerUps.Add(missilePowerUp);
+        }
+
+        //==============================================================================================================================
+
         private void UpdateEnemies(GameTime gameTime)
         {
             // Spawn a new enemy enemy every 1.5 seconds
@@ -568,6 +608,7 @@ namespace Shooter
                 }
             }
         }
+
 
         //==============================================================================================================================
 
@@ -690,6 +731,32 @@ namespace Shooter
                 {
 
                     healthPowerUps.RemoveAt(i);
+                }
+            }
+        }
+
+        //==============================================================================================================================
+
+        private void UpdateMissilePowerUps(GameTime gameTime)
+        {
+            // Spawn a new missile power up every 1.5 seconds
+            if (gameTime.TotalGameTime - previousMissilePowerUpSpawnTime > missilePowerUpSpawnTime)
+            {
+                previousMissilePowerUpSpawnTime = gameTime.TotalGameTime;
+
+                // Add a missile power up
+                AddMissilePowerUp();
+            }
+
+            // Update the Missile Power Ups
+            for (int i = missilePowerUps.Count - 1; i >= 0; i--)
+            {
+                missilePowerUps[i].Update(gameTime);
+
+                if (missilePowerUps[i].powerUpActive == false)
+                {
+
+                    missilePowerUps.RemoveAt(i);
                 }
             }
         }
@@ -850,6 +917,9 @@ namespace Shooter
             
             // Initialize the health power up list
             healthPowerUps.Clear();
+
+            // Initialize the missile power up list
+            missilePowerUps.Clear();
 
             // Initialize the heavyEnemies list
             heavyEnemies.Clear();

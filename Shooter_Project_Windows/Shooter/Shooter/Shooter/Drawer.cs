@@ -17,6 +17,7 @@ namespace Shooter
         List<HeavyEnemy> heavyEnemies;
         List<Diagonal> diagonals;
         List<HealthPowerUp> healthPowerUps;
+        List<MissilePowerUp> missilePowerUps;
         SpriteBatch spriteBatch;
         List<Laser> projectiles;
         List<Missile> missiles;
@@ -28,14 +29,15 @@ namespace Shooter
         ParallaxingBackground bgLayer2;
         int healthBarWidth;
 
-        public void UpdateVariables(List<Enemy> enemies, List<HeavyEnemy> heavyEnemies, List<Diagonal> diagonals, List<HealthPowerUp> healthPowerUps, List<Laser> projectiles,
-            List<Animation> explosions, SpriteBatch spriteBatch, Player player, Texture2D mainBackground, Texture2D healthBar, 
+        public void UpdateVariables(List<Enemy> enemies, List<HeavyEnemy> heavyEnemies, List<Diagonal> diagonals, List<HealthPowerUp> healthPowerUps, List<MissilePowerUp> missilePowerUps,
+            List<Laser> projectiles, List<Animation> explosions, SpriteBatch spriteBatch, Player player, Texture2D mainBackground, Texture2D healthBar, 
             ParallaxingBackground bgLayer1, ParallaxingBackground bgLayer2, List<Missile> missiles)
         {
             this.enemies = enemies;
             this.heavyEnemies = heavyEnemies;
             this.diagonals = diagonals;
             this.healthPowerUps = healthPowerUps;
+            this.missilePowerUps = missilePowerUps;
             this.spriteBatch = spriteBatch;
             this.projectiles = projectiles;
             this.explosions = explosions;
@@ -94,6 +96,11 @@ namespace Shooter
                 healthPowerUps[i].Draw(spriteBatch);
             }
 
+            // Draw the Missile Power Ups
+            for (int k = 0; k < missilePowerUps.Count; k++)
+            {
+                missilePowerUps[k].Draw(spriteBatch);
+            }
         }
 
         private void DrawPlayerAndProjectiles()

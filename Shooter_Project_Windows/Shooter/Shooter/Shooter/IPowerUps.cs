@@ -51,8 +51,7 @@ namespace Shooter
             // If the power up is past the screen then deactivate it
             if (powerUpPosition.X < -Width)
             {
-                // By setting the Active flag to false, the game will remove this objet fromthe 
-                // active game list
+                // By setting the Active flag to false, the game will remove this object from the active game list
                 powerUpActive = false;
             }
         }

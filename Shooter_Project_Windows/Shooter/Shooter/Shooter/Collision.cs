@@ -18,20 +18,24 @@ namespace Shooter
         List<HeavyEnemy> heavyEnemies;
         List<Diagonal> diagonals;
         List<HealthPowerUp> healthPowerUps;
+        List<MissilePowerUp> missilePowerUps;
         List<Laser> projectiles;
         List<Missile> missiles;
-        Rectangle r1, r2, r3, r4;
+        Rectangle r1, r2, r3, r4, r5;
+        int missileCount;
 
-        public void UpdateVariables(List<Enemy> enemies, List<HeavyEnemy> heavyEnemies, List<Diagonal> diagonals, List<HealthPowerUp> healthPowerUps, List<Laser> projectiles,
-            Player player, List<Missile> missiles)
+        public void UpdateVariables(List<Enemy> enemies, List<HeavyEnemy> heavyEnemies, List<Diagonal> diagonals, List<HealthPowerUp> healthPowerUps, List<MissilePowerUp> missilePowerUps, List<Laser> projectiles,
+            Player player, List<Missile> missiles, int missileCount)
         {
             this.enemies = enemies;
-            this.heavyEnemies = heavyEnemies;           
+            this.heavyEnemies = heavyEnemies;
             this.projectiles = projectiles;
             this.player = player;
             this.missiles = missiles;
             this.diagonals = diagonals;
             this.healthPowerUps = healthPowerUps;
+            this.missilePowerUps = missilePowerUps;
+            this.missileCount = missileCount;
         }
 
         public void collision()
@@ -45,7 +49,7 @@ namespace Shooter
             for (int i = 0; i < enemies.Count; i++)
             {
                 r2 = new Rectangle((int)enemies[i].Position.X,
-                (int)enemies[i].Position.Y - enemies[i].Height / 2 ,
+                (int)enemies[i].Position.Y - enemies[i].Height / 2,
                 enemies[i].Width,
                 enemies[i].Height);
 
@@ -145,7 +149,7 @@ namespace Shooter
 
             for (int i = 0; i < heavyEnemies.Count; i++)
             {
-                r2= new Rectangle((int)heavyEnemies[i].Position.X,
+                r2 = new Rectangle((int)heavyEnemies[i].Position.X,
                 (int)heavyEnemies[i].Position.Y - heavyEnemies[i].Width / 2,
                 heavyEnemies[i].Width,
                 heavyEnemies[i].Height);
@@ -207,6 +211,22 @@ namespace Shooter
                     player.Health = player.Health + 30;
                 }
             }
+
+                for (int k = 0; k < missilePowerUps.Count; k++)
+                {
+                    r5 = new Rectangle((int)missilePowerUps[k].powerUpPosition.X + missilePowerUps[k].Height + 20,
+                    (int)missilePowerUps[k].powerUpPosition.Y + missilePowerUps[k].Height / 2,
+                    missilePowerUps[k].Width,
+                    missilePowerUps[k].Height);
+
+                    // Determine if the two objects collided with each other
+                    if (r1.Intersects(r5))
+                    {
+                        missilePowerUps[k].powerUpActive = false;
+                        missileCount = missileCount + 3;
+                    }
+
+                }
+            }
         }
     }
-}
