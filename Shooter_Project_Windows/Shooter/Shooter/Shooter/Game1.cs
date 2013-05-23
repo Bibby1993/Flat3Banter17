@@ -207,7 +207,7 @@ namespace Shooter
             healthPowerUpTexture = Content.Load<Texture2D>("HealthPowerUp");
             missilePowerUpTexture = Content.Load<Texture2D>("MissilePowerUp");
 
-            projectileTexture = Content.Load<Texture2D>("laser");
+            projectileTexture = Content.Load<Texture2D>("laser1");
             missileTexture = Content.Load<Texture2D>("rocket");
 
             explosionTexture = Content.Load<Texture2D>("explosion");
