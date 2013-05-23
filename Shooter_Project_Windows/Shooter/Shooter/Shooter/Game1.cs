@@ -785,8 +785,12 @@ namespace Shooter
                 // Reset our current time
                 previousFireTime = gameTime.TotalGameTime;
 
-                // Add the projectile, but add it to the front and center of the player
-                AddProjectile(player.Position + new Vector2(player.Width / 2, 0));
+                // Add the projectile, but add it to the front of and just ABOVE the centre of the player
+                AddProjectile(player.Position + new Vector2(player.Width / 2, - player.Height / 4));
+
+
+                // Add the projectile, but add it to the front of and just BELOW the centre of the player
+                AddProjectile(player.Position + new Vector2(player.Width / 2, player.Height / 4));
 
                 // Play the laser sound
                 laserSound.Play();
