@@ -19,7 +19,23 @@ namespace Shooter
             powerUpActive = true;
 
             // Set how fast the power up moves
-            powerUpMoveSpeedX = 6f * df;
+            powerUpMoveSpeedX = 4f * df;
+            powerUpMoveSpeedY = 2f * df;
+        }
+
+        public void changeDirection(GraphicsDevice gd)
+        {
+            Random random = new Random();
+            if (random.Next(300) >= 295)
+                powerUpMoveSpeedY = -powerUpMoveSpeedY;
+            if (powerUpPosition.Y >= gd.Viewport.Height)
+            {
+                powerUpMoveSpeedY = ((float)Math.Sqrt(powerUpMoveSpeedY * powerUpMoveSpeedY));
+            }
+            else if (powerUpPosition.Y <= 0)
+            {
+                powerUpMoveSpeedY = -((float)Math.Sqrt(powerUpMoveSpeedY * powerUpMoveSpeedY));
+            }
         }
     }
 }

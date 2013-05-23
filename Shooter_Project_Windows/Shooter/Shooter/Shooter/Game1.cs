@@ -105,7 +105,7 @@ namespace Shooter
             score = 0;
             missileCount = 3;
             secondTimer = 60;
-            difficultyFactor = 1.0f;
+            difficultyFactor = 1.05f;
             transportShipHealth = 300;
 
             projectiles = new List<Laser>();
@@ -151,10 +151,10 @@ namespace Shooter
             heavyEnemySpawnTime = TimeSpan.FromSeconds(1.0f);
 
             //Used to determine how fast health power ups respawn
-            healthPowerUpSpawnTime = TimeSpan.FromSeconds(50.0f);
+            healthPowerUpSpawnTime = TimeSpan.FromSeconds(12.5f);
 
             //Used to determine how fast health power ups respawn
-            missilePowerUpSpawnTime = TimeSpan.FromSeconds(80.0f);
+            missilePowerUpSpawnTime = TimeSpan.FromSeconds(20.0f);
 
             // Initialize our random number generator
             random = new Random();
@@ -740,6 +740,7 @@ namespace Shooter
             for (int i = healthPowerUps.Count - 1; i >= 0; i--)
             {
                 healthPowerUps[i].Update(gameTime);
+                healthPowerUps[i].changeDirection(GraphicsDevice);
 
                 if (healthPowerUps[i].powerUpActive == false)
                 {
@@ -766,6 +767,8 @@ namespace Shooter
             for (int i = missilePowerUps.Count - 1; i >= 0; i--)
             {
                 missilePowerUps[i].Update(gameTime);
+                missilePowerUps[i].changeDirection(GraphicsDevice);
+
 
                 if (missilePowerUps[i].powerUpActive == false)
                 {
