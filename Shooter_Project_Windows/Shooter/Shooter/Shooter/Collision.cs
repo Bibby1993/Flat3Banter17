@@ -19,13 +19,17 @@ namespace Shooter
         List<Diagonal> diagonals;
         List<HealthPowerUp> healthPowerUps;
         List<MissilePowerUp> missilePowerUps;
+        List<RapidFirePowerUp> rapidFirePowerUps;
         List<Laser> projectiles;
         List<Missile> missiles;
-        Rectangle r1, r2, r3, r4, r5;
+        Rectangle r1, r2, r3, r4;
         public int missileCount;
+        public TimeSpan fireTime = TimeSpan.FromSeconds(0.15f);
+        int rapidFireTimer = 60;
+        bool rapidFireActive = false;
 
         public void UpdateVariables(List<Enemy> enemies, List<HeavyEnemy> heavyEnemies, List<Diagonal> diagonals, List<HealthPowerUp> healthPowerUps,
-            List<MissilePowerUp> missilePowerUps, List<Laser> projectiles, Player player, List<Missile> missiles, int missileCount)
+            List<MissilePowerUp> missilePowerUps, List<RapidFirePowerUp> rapidFirePowerUps, List<Laser> projectiles, Player player, List<Missile> missiles, int missileCount)
         {
             this.enemies = enemies;
             this.heavyEnemies = heavyEnemies;
@@ -35,7 +39,19 @@ namespace Shooter
             this.diagonals = diagonals;
             this.healthPowerUps = healthPowerUps;
             this.missilePowerUps = missilePowerUps;
+            this.rapidFirePowerUps = rapidFirePowerUps;
             this.missileCount = missileCount;
+            this.fireTime = fireTime;
+
+            if (rapidFireActive == true)
+            {
+                rapidFireTimer--;
+                if (rapidFireTimer <= 0)
+                {
+                    rapidFireActive = false;
+                    fireTime = TimeSpan.FromSeconds(0.15f);
+                }
+            }
         }
 
         public void collision()
@@ -214,16 +230,34 @@ namespace Shooter
 
                 for (int k = 0; k < missilePowerUps.Count; k++)
                 {
-                    r5 = new Rectangle((int)missilePowerUps[k].powerUpPosition.X + missilePowerUps[k].Height + 20,
+                    r4 = new Rectangle((int)missilePowerUps[k].powerUpPosition.X + missilePowerUps[k].Height + 20,
                     (int)missilePowerUps[k].powerUpPosition.Y + missilePowerUps[k].Height / 2,
                     missilePowerUps[k].Width,
                     missilePowerUps[k].Height);
 
                     // Determine if the two objects collided with each other
-                    if (r1.Intersects(r5))
+                    if (r1.Intersects(r4))
                     {
                         missilePowerUps[k].powerUpActive = false;
                         missileCount = missileCount + 3;
+                    }
+
+                }
+
+                for (int k = 0; k < rapidFirePowerUps.Count; k++)
+                {
+                    r4 = new Rectangle((int)rapidFirePowerUps[k].powerUpPosition.X + rapidFirePowerUps[k].Height + 20,
+                    (int)rapidFirePowerUps[k].powerUpPosition.Y + rapidFirePowerUps[k].Height / 2,
+                    rapidFirePowerUps[k].Width,
+                    rapidFirePowerUps[k].Height);
+
+                    // Determine if the two objects collided with each other
+                    if (r1.Intersects(r4))
+                    {
+                        rapidFirePowerUps[k].powerUpActive = false;
+                        fireTime = TimeSpan.FromSeconds(0.075f);
+                        rapidFireActive = true;
+                        rapidFireTimer = 300;
                     }
 
                 }
