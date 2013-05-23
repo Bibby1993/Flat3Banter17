@@ -198,11 +198,11 @@ namespace Shooter
             bgLayer1.Initialize(Content, "bglayer1", GraphicsDevice.Viewport.Width, -1);
             bgLayer2.Initialize(Content, "bglayer2", GraphicsDevice.Viewport.Width, -2);
 
-            enemyTexture = Content.Load<Texture2D>("smallShip");
+            enemyTexture = Content.Load<Texture2D>("ship4");
             heavyEnemyTexture = Content.Load<Texture2D>("bigShip");
             diagonalTexture = Content.Load<Texture2D>("diagonal");
             playerCutsceneTexture = Content.Load<Texture2D>("player");
-            transportTexture = Content.Load<Texture2D>("transportShip");
+            transportTexture = Content.Load<Texture2D>("Ship5");
             healthBar = Content.Load<Texture2D>("Health Bar");
             healthPowerUpTexture = Content.Load<Texture2D>("HealthPowerUp");
             missilePowerUpTexture = Content.Load<Texture2D>("MissilePowerUp");
