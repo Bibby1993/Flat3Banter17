@@ -17,7 +17,17 @@ namespace Shooter
 
         enum waveCount { one, two, three, four, five, six, seven, eight, nine, ten };
         waveCount waveState;
-        int enemiesLeft, heavyEnemiesLeft, diagonalsLeft;
+        public int enemiesLeft, heavyEnemiesLeft, diagonalsLeft;
+        public TimeSpan enemySpawnTime, previousEnemySpawnTime;
+        public TimeSpan heavyEnemySpawnTime, previousheavyEnemySpawnTime;
+        public TimeSpan diagonalEnemySpawnTime, previousDiagonalEnemySpawnTime;
+
+        //spawntimes for enemies
+
+        // Set the time keepers to zero
+
+
+
     
         //Constructors
         public WaveTimer()
@@ -26,6 +36,15 @@ namespace Shooter
             enemiesLeft = 10;
             heavyEnemiesLeft = 10;
             diagonalsLeft = 5;
+            previousheavyEnemySpawnTime = TimeSpan.Zero;
+
+            // Used to determine how fast enemy respawns
+            enemySpawnTime = TimeSpan.FromSeconds(1.0f);
+
+            // Used to determine how fast heavy enemy respawns
+            heavyEnemySpawnTime = TimeSpan.FromSeconds(5.0f);
+
+            diagonalEnemySpawnTime = TimeSpan.FromSeconds(10.0f);
         }
         public void update(int time)         
         {

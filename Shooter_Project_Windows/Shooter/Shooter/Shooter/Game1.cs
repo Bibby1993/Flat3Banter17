@@ -56,11 +56,10 @@ namespace Shooter
         List<RapidFirePowerUp> rapidFirePowerUps;
 
         // The rate at which the enemies appear
-        TimeSpan enemySpawnTime, previousSpawnTime;
         TimeSpan healthPowerUpSpawnTime, previousHealthPowerUpSpawnTime;
         TimeSpan missilePowerUpSpawnTime, previousMissilePowerUpSpawnTime;
         TimeSpan rapidFirePowerUpSpawnTime, previousRapidFirePowerUpSpawnTime;
-        TimeSpan heavyEnemySpawnTime, previousheavyEnemySpawnTime;
+
         public TimeSpan previousFireTime;
         TimeSpan transportHealTime, previousTransportHealTime;
         int timePlayed;
@@ -129,21 +128,12 @@ namespace Shooter
             heavyEnemies = new List<HeavyEnemy>();
 
             // Set the time keepers to zero
-            previousSpawnTime = TimeSpan.Zero;
+            waveTimer.previousEnemySpawnTime = TimeSpan.Zero;
 
             // Set the time keepers to zero
             previousHealthPowerUpSpawnTime = TimeSpan.Zero;
             previousMissilePowerUpSpawnTime = TimeSpan.Zero;
             previousRapidFirePowerUpSpawnTime = TimeSpan.Zero;
-
-            // Set the time keepers to zero
-            previousheavyEnemySpawnTime = TimeSpan.Zero;
-
-            // Used to determine how fast enemy respawns
-            enemySpawnTime = TimeSpan.FromSeconds(1.0f);
-
-            // Used to determine how fast heavy enemy respawns
-            heavyEnemySpawnTime = TimeSpan.FromSeconds(1.0f);
 
             //Used to determine how fast health power ups respawn
             healthPowerUpSpawnTime = TimeSpan.FromSeconds(12.5f);
@@ -599,12 +589,13 @@ namespace Shooter
         private void UpdateEnemies(GameTime gameTime)
         {
             // Spawn a new enemy enemy every 1.5 seconds
-            if (gameTime.TotalGameTime - previousSpawnTime > enemySpawnTime)
+            if (gameTime.TotalGameTime - waveTimer.previousEnemySpawnTime > waveTimer.enemySpawnTime && waveTimer.enemiesLeft > 0)
             {
-                previousSpawnTime = gameTime.TotalGameTime;
+                waveTimer.previousEnemySpawnTime = gameTime.TotalGameTime;
 
                 // Add an Enemy
                 AddEnemy();
+                waveTimer.enemiesLeft--;
             }
 
             // Update the Enemies
@@ -642,18 +633,15 @@ namespace Shooter
 
         private void UpdateHeavyEnemies(GameTime gameTime)
         {
-            // Spawn a new enemy enemy every 1.5 seconds
-           /* if (gameTime.TotalGameTime - previousheavyEnemySpawnTime > heavyEnemySpawnTime)
+            // Spawn a new heavyenemy every 1.5 seconds
+            if (gameTime.TotalGameTime - waveTimer.previousheavyEnemySpawnTime > waveTimer.heavyEnemySpawnTime && waveTimer.heavyEnemiesLeft > 0)
             {
-                previousheavyEnemySpawnTime = gameTime.TotalGameTime;
+                waveTimer.previousheavyEnemySpawnTime = gameTime.TotalGameTime;
 
                 // Add an Heavy Enemy
                 AddHeavyEnemy();
+                waveTimer.heavyEnemiesLeft--;
             }
-            */
-
-            if (heavyEnemies.Count <= 0)
-                AddHeavyEnemy();
             // Update the Heavy Enemies
             for (int i = heavyEnemies.Count - 1; i >= 0; i--)
             {
