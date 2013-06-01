@@ -25,13 +25,11 @@ namespace Shooter
         Player player;
         List<Animation> explosions;
         Texture2D mainBackground;
-        Texture2D healthBar;
         ParallaxingBackground bgLayer1;
         ParallaxingBackground bgLayer2;
-        int healthBarWidth;
 
         public void UpdateVariables(List<Enemy> enemies, List<HeavyEnemy> heavyEnemies, List<Diagonal> diagonals, List<HealthPowerUp> healthPowerUps, List<MissilePowerUp> missilePowerUps, 
-            List<RapidFirePowerUp> rapidFirePowerUps, List<Laser> projectiles, List<Animation> explosions, SpriteBatch spriteBatch, Player player, Texture2D mainBackground, Texture2D healthBar, 
+            List<RapidFirePowerUp> rapidFirePowerUps, List<Laser> projectiles, List<Animation> explosions, SpriteBatch spriteBatch, Player player, Texture2D mainBackground, 
             ParallaxingBackground bgLayer1, ParallaxingBackground bgLayer2, List<Missile> missiles)
         {
             this.enemies = enemies;
@@ -48,7 +46,6 @@ namespace Shooter
             this.bgLayer1 = bgLayer1;
             this.bgLayer2 = bgLayer2;
             this.missiles = missiles;
-            this.healthBar = healthBar;
 
         }
 
@@ -132,15 +129,6 @@ namespace Shooter
             {
                 explosions[i].Draw(spriteBatch);
             }
-
-             // Draw the health bar that lowers
-            spriteBatch.Draw(healthBar, new Vector2(healthBarWidth/2 - player.Health/2), new Rectangle(0, 46, healthBar.Width, 41), Color.Gray);
-
-            //Draw the health
-            spriteBatch.Draw(healthBar, new Vector2(healthBarWidth / 2 - player.Health / 2), new Rectangle(0, 46, (int)(healthBar.Width*((double)player.Health/100)), 41), Color.Red);
-             
-            spriteBatch.Draw(healthBar, new Vector2(healthBarWidth / 2 - player.Health / 2), new Rectangle(0, 0, healthBar.Width, 41), Color.White);
-
         }
 
         private void DrawBackgrounds()

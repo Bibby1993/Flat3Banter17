@@ -122,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animation.cs" />
+    <Compile Include="WaveTimer.cs" />
     <Compile Include="Collision.cs" />
     <Compile Include="Diagonal.cs" />
     <Compile Include="Drawer.cs" />

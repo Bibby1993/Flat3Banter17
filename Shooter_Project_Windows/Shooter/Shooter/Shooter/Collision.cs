@@ -41,7 +41,6 @@ namespace Shooter
             this.missilePowerUps = missilePowerUps;
             this.rapidFirePowerUps = rapidFirePowerUps;
             this.missileCount = missileCount;
-            this.fireTime = fireTime;
 
             if (rapidFireActive == true)
             {

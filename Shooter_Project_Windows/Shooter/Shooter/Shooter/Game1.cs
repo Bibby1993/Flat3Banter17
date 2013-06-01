@@ -39,7 +39,7 @@ namespace Shooter
         Texture2D projectileTexture, missileTexture;
         Texture2D enemyTexture, heavyEnemyTexture, diagonalTexture, transportTexture, playerCutsceneTexture, healthPowerUpTexture, missilePowerUpTexture, rapidFirePowerUpTexture;
         Texture2D explosionTexture;
-        Texture2D healthBar;
+
 
         // Parallaxing Layers
         ParallaxingBackground bgLayer1, bgLayer2;
@@ -63,7 +63,7 @@ namespace Shooter
         TimeSpan heavyEnemySpawnTime, previousheavyEnemySpawnTime;
         public TimeSpan previousFireTime;
         TimeSpan transportHealTime, previousTransportHealTime;
-        TimeSpan waveTime, previousWaveTime;
+        int timePlayed;
         
         // The sound that is played when a laser is fired
         SoundEffect laserSound;
@@ -72,7 +72,7 @@ namespace Shooter
         Song cryingSound;
 
         //Number that holds the player score
-        int score, lastScore, secondTimer, transportShipHealth, healthBarWidth, waveCounter;
+        int score, lastScore, secondTimer, transportShipHealth;
         public int missileCount;
 
         // The font used to display UI elements
@@ -82,6 +82,7 @@ namespace Shooter
         Random random;
         Drawer drawer;
         Collision collision;
+        WaveTimer waveTimer;
 
         public Game1()
         {
@@ -98,17 +99,16 @@ namespace Shooter
             state = gameState.startScreen;
             drawer = new Drawer();
             collision = new Collision();
+            waveTimer = new WaveTimer();
 
-
-            //Initialize Health Bar
-            healthBarWidth = GraphicsDevice.Viewport.Width;
 
             //Initial values of variables
             score = 0;
             missileCount = 3;
             secondTimer = 60;
-            difficultyFactor = 1.05f;
+            difficultyFactor = 1.0f;
             transportShipHealth = 300;
+            timePlayed = 0;
 
             projectiles = new List<Laser>();
 
@@ -201,7 +201,6 @@ namespace Shooter
             diagonalTexture = Content.Load<Texture2D>("diagonal");
             playerCutsceneTexture = Content.Load<Texture2D>("player");
             transportTexture = Content.Load<Texture2D>("Ship5");
-            healthBar = Content.Load<Texture2D>("Health Bar");
             healthPowerUpTexture = Content.Load<Texture2D>("HealthPowerUp");
             missilePowerUpTexture = Content.Load<Texture2D>("MissilePowerUp");
             rapidFirePowerUpTexture = Content.Load<Texture2D>("rapidFirePowerUp");
@@ -291,7 +290,9 @@ namespace Shooter
                 // Read the current state of the keyboard and gamepad and store it
                 currentKeyboardState = Keyboard.GetState();
                 currentGamePadState = GamePad.GetState(PlayerIndex.One);
-
+                //Update waveCounter
+                timePlayed++;
+                waveTimer.update(timePlayed);
                 //Update the player
                 UpdatePlayer(gameTime);
 
@@ -354,7 +355,7 @@ namespace Shooter
             else if (state == gameState.cutscene)
             {
                 drawer.UpdateVariables(enemies, heavyEnemies, diagonals, healthPowerUps, missilePowerUps, rapidFirePowerUps, projectiles, explosions,
-                 spriteBatch, player, mainBackground, healthBar, bgLayer1, bgLayer2, missiles);
+                 spriteBatch, player, mainBackground, bgLayer1, bgLayer2, missiles);
             
                 drawer.DrawSomeBackgrounds();
 
@@ -368,7 +369,7 @@ namespace Shooter
             {
                 GraphicsDevice.Clear(Color.CornflowerBlue);
                 drawer.UpdateVariables(enemies, heavyEnemies, diagonals, healthPowerUps, missilePowerUps, rapidFirePowerUps, projectiles, explosions,
-                    spriteBatch, player, mainBackground, healthBar, bgLayer1, bgLayer2, missiles);
+                    spriteBatch, player, mainBackground, bgLayer1, bgLayer2, missiles);
                 // Start drawing
                 drawer.DrawAll();
                 // Draw the score
